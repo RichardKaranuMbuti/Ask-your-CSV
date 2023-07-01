@@ -1,0 +1,366 @@
+Datum,Vrsta Transakcije,Opis,Kategorija,Račun,Stranka,DDV Številka,Znesek brez DDV,DDV,Znesek s DDV
+01.01.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka A,SI12345678,800,160,960
+02.01.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI87654321,500,100,600
+03.01.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI65432109,200,40,240
+04.01.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka C,SI98765432,1200,240,1440
+05.01.2022,Strošek,Strošek električne energije,Stroški oskrbe,Stroški oskrbe,,SI23456789,150,30,180
+06.01.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka D,SI34567890,500,100,600
+07.01.2022,Strošek,Strošek potnega naloga,Stroški potovanj,Stroški potovanj,,SI45678901,250,50,300
+08.01.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka E,SI56789012,700,140,840
+09.01.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI67890123,400,80,480
+10.01.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka F,SI78901234,1000,200,1200
+11.01.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI89012345,300,60,360
+12.01.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,200,40,240
+13.01.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka G,SI01234567,600,120,720
+14.01.2022,Strošek,Strošek telekomunikacij,Stroški komunikacij,Stroški komunikacij,,SI12345678,100,20,120
+15.01.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka H,SI23456789,900,180,1080
+16.01.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI34567890,250,50,300
+17.01.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka I,SI45678901,800,160,960
+18.01.2022,Strošek,Strošek električne energije,Stroški oskrbe,Stroški oskrbe,,SI56789012,150,30,180
+19.01.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka J,SI67890123,700,140,840
+20.01.2022,Strošek,Strošek potnega naloga,Stroški potovanj,Stroški potovanj,,SI78901234,300,60,360
+21.01.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka K,SI89012345,600,120,720
+22.01.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI90123456,400,80,480
+23.01.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka L,SI01234567,1000,200,1200
+24.01.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI12345678,250,50,300
+25.01.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI23456789,200,40,240
+26.01.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka M,SI34567890,800,160,960
+27.01.2022,Strošek,Strošek telekomunikacij,Stroški komunikacij,Stroški komunikacij,,SI45678901,100,20,120
+28.01.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka N,SI56789012,900,180,1080
+29.01.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI67890123,250,50,300
+30.01.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka O,SI78901234,800,160,960
+31.01.2022,Strošek,Strošek električne energije,Stroški oskrbe,Stroški oskrbe,,SI89012345,150,30,180
+01.02.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka P,SI90123456,700,140,840
+02.02.2022,Strošek,Strošek potnega naloga,Stroški potovanj,Stroški potovanj,,SI01234567,300,60,360
+03.02.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka Q,SI12345678,600,120,720
+04.02.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI23456789,400,80,480
+05.02.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka R,SI34567890,1000,200,1200
+06.02.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI45678901,250,50,300
+07.02.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI56789012,200,40,240
+08.02.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka S,SI67890123,800,160,960
+09.02.2022,Strošek,Strošek telekomunikacij,Stroški komunikacij,Stroški komunikacij,,SI78901234,100,20,120
+10.02.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka T,SI89012345,900,180,1080
+11.02.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI90123456,250,50,300
+12.02.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka U,SI01234567,800,160,960
+13.02.2022,Strošek,Strošek električne energije,Stroški oskrbe,Stroški oskrbe,,SI12345678,150,30,180
+14.02.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka V,SI23456789,700,140,840
+15.02.2022,Strošek,Strošek potnega naloga,Stroški potovanj,Stroški potovanj,,SI34567890,300,60,360
+16.02.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka W,SI45678901,600,120,720
+17.02.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI56789012,400,80,480
+18.02.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka X,SI67890123,1000,200,1200
+19.02.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI78901234,250,50,300
+20.02.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI89012345,200,40,240
+21.02.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka Y,SI90123456,800,160,960
+22.02.2022,Strošek,Strošek telekomunikacij,Stroški komunikacij,Stroški komunikacij,,SI01234567,100,20,120
+23.02.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka Z,SI12345678,900,180,1080
+24.02.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI23456789,250,50,300
+25.02.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka A,SI34567890,800,160,960
+26.02.2022,Strošek,Strošek električne energije,Stroški oskrbe,Stroški oskrbe,,SI45678901,150,30,180
+27.02.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka B,SI56789012,700,140,840
+28.02.2022,Strošek,Strošek potnega naloga,Stroški potovanj,Stroški potovanj,,SI67890123,300,60,360
+01.03.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka C,SI78901234,600,120,720
+02.03.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI89012345,400,80,480
+03.03.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka D,SI90123456,1000,200,1200
+04.03.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI01234567,250,50,300
+05.03.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI12345678,200,40,240
+06.03.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka E,SI23456789,800,160,960
+07.03.2022,Strošek,Strošek telekomunikacij,Stroški komunikacij,Stroški komunikacij,,SI34567890,100,20,120
+08.03.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka F,SI45678901,900,180,1080
+09.03.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,250,50,300
+10.03.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka G,SI67890123,800,160,960
+11.03.2022,Strošek,Strošek električne energije,Stroški oskrbe,Stroški oskrbe,,SI78901234,150,30,180
+12.03.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka H,SI89012345,700,140,840
+13.03.2022,Strošek,Strošek potnega naloga,Stroški potovanj,Stroški potovanj,,SI90123456,300,60,360
+14.03.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka I,SI01234567,600,120,720
+15.03.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,400,80,480
+16.03.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka J,SI23456789,1000,200,1200
+17.03.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI34567890,250,50,300
+18.03.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI45678901,200,40,240
+19.03.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka K,SI56789012,800,160,960
+20.03.2022,Strošek,Strošek telekomunikacij,Stroški komunikacij,Stroški komunikacij,,SI67890123,100,20,120
+21.03.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka L,SI78901234,900,180,1080
+22.03.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI89012345,250,50,300
+23.03.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka M,SI90123456,800,160,960
+24.03.2022,Strošek,Strošek električne energije,Stroški oskrbe,Stroški oskrbe,,SI01234567,150,30,180
+25.03.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka N,SI12345678,700,140,840
+26.03.2022,Strošek,Strošek potnega naloga,Stroški potovanj,Stroški potovanj,,SI23456789,300,60,360
+27.03.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka O,SI34567890,600,120,720
+28.03.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI45678901,400,80,480
+29.03.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka P,SI56789012,1000,200,1200
+30.03.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI67890123,250,50,300
+31.03.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI78901234,200,40,240
+01.04.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI90123456,250,50,300
+02.04.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka K,SI23456789,700,140,840
+03.04.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI65432109,400,80,480
+04.04.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka L,SI87654321,800,160,960
+05.04.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI12345678,200,40,240
+06.04.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI98765432,150,30,180
+07.04.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka M,SI78901234,900,180,1080
+08.04.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+09.04.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka N,SI90123456,600,120,720
+10.04.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+11.04.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+12.04.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka O,SI87654321,750,150,900
+13.04.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+14.04.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka P,SI98765432,850,170,1020
+15.04.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+16.04.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+17.04.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka Q,SI78901234,900,180,1080
+18.04.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+19.04.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka R,SI90123456,600,120,720
+20.04.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+21.04.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+22.04.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka S,SI87654321,750,150,900
+23.04.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+24.04.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka T,SI98765432,850,170,1020
+25.04.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+26.04.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+27.04.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka U,SI78901234,900,180,1080
+28.04.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+29.04.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka V,SI90123456,600,120,720
+30.04.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+01.05.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+02.05.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka W,SI87654321,750,150,900
+03.05.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+04.05.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka X,SI98765432,850,170,1020
+05.05.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+06.05.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+07.05.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka Y,SI78901234,900,180,1080
+08.05.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+09.05.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka Z,SI90123456,600,120,720
+10.05.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+11.05.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+12.05.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka A,SI87654321,750,150,900
+13.05.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+14.05.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka B,SI98765432,850,170,1020
+15.05.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka B,SI98765432,850,170,1020
+16.05.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+17.05.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka C,SI78901234,900,180,1080
+18.05.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+19.05.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka D,SI90123456,600,120,720
+20.05.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+21.05.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+22.05.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka E,SI87654321,750,150,900
+23.05.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+24.05.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka F,SI98765432,850,170,1020
+25.05.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+26.05.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+27.05.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka G,SI78901234,900,180,1080
+28.05.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+29.05.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka H,SI90123456,600,120,720
+30.05.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+31.05.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+01.06.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka I,SI87654321,750,150,900
+02.06.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+03.06.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka J,SI98765432,850,170,1020
+04.06.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+05.06.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+06.06.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka K,SI78901234,900,180,1080
+07.06.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+08.06.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka L,SI90123456,600,120,720
+09.06.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+10.06.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+11.06.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka M,SI87654321,750,150,900
+12.06.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+13.06.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka N,SI98765432,850,170,1020
+14.06.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+15.06.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+16.06.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka O,SI78901234,900,180,1080
+17.06.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+18.06.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka P,SI90123456,600,120,720
+19.06.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+20.06.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+21.06.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka Q,SI87654321,750,150,900
+22.06.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+23.06.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka R,SI98765432,850,170,1020
+24.06.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+25.06.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+26.06.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka S,SI78901234,900,180,1080
+27.06.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+28.06.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka T,SI90123456,600,120,720
+29.06.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+30.06.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+01.07.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka U,SI87654321,750,150,900
+02.07.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+03.07.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka V,SI98765432,850,170,1020
+04.07.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+05.07.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+06.07.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka W,SI78901234,900,180,1080
+07.07.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+08.07.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka X,SI90123456,600,120,720
+09.07.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+10.07.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+11.07.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka Y,SI87654321,750,150,900
+12.07.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+13.07.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka Z,SI98765432,850,170,1020
+14.07.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+15.07.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+16.07.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka A1,SI78901234,900,180,1080
+17.07.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+18.07.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka B1,SI90123456,600,120,720
+19.07.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+20.07.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+21.07.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka C1,SI87654321,750,150,900
+22.07.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+23.07.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka D1,SI98765432,850,170,1020
+24.07.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+25.07.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+26.07.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka E1,SI78901234,900,180,1080
+27.07.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+28.07.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka F1,SI90123456,600,120,720
+29.07.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+30.07.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+31.07.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka G1,SI87654321,750,150,900
+01.08.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+02.08.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka H1,SI98765432,850,170,1020
+03.08.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+04.08.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+05.08.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka I1,SI78901234,900,180,1080
+06.08.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+07.08.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka J1,SI90123456,600,120,720
+08.08.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+09.08.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+10.08.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka K1,SI87654321,750,150,900
+11.08.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+12.08.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka L1,SI98765432,850,170,1020
+13.08.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+14.08.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+15.08.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka M1,SI78901234,900,180,1080
+16.08.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+17.08.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka N1,SI90123456,600,120,720
+18.08.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+19.08.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+20.08.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka O1,SI87654321,750,150,900
+21.08.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+22.08.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka P1,SI98765432,850,170,1020
+23.08.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+24.08.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+25.08.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka Q1,SI78901234,900,180,1080
+26.08.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+27.08.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka R1,SI90123456,600,120,720
+28.08.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+29.08.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+30.08.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka S1,SI87654321,750,150,900
+31.08.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+01.09.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka T1,SI98765432,850,170,1020
+02.09.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+03.09.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+04.09.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka U1,SI78901234,900,180,1080
+05.09.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+06.09.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka V1,SI90123456,600,120,720
+07.09.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+08.09.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+09.09.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka W1,SI87654321,750,150,900
+10.09.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+11.09.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka X1,SI98765432,850,170,1020
+12.09.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+13.09.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+14.09.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka Y1,SI78901234,900,180,1080
+15.09.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+16.09.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka Z1,SI90123456,600,120,720
+17.09.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+18.09.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+19.09.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka A2,SI87654321,750,150,900
+20.09.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+21.09.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka B2,SI98765432,850,170,1020
+22.09.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+23.09.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+24.09.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka C2,SI78901234,900,180,1080
+25.09.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+26.09.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka D2,SI90123456,600,120,720
+27.09.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+28.09.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+29.09.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka E2,SI87654321,750,150,900
+30.09.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+01.10.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka F2,SI98765432,850,170,1020
+02.10.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+03.10.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+04.10.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka G2,SI78901234,900,180,1080
+05.10.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+06.10.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka H2,SI90123456,600,120,720
+07.10.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+08.10.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+09.10.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka I2,SI87654321,750,150,900
+10.10.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+11.10.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka J2,SI98765432,850,170,1020
+12.10.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+13.10.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+14.10.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka K2,SI78901234,900,180,1080
+15.10.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+16.10.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka L2,SI90123456,600,120,720
+17.10.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+18.10.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+19.10.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka M2,SI87654321,750,150,900
+20.10.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+21.10.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka N2,SI98765432,850,170,1020
+22.10.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+23.10.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+24.10.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka O2,SI78901234,900,180,1080
+25.10.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+26.10.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka P2,SI90123456,600,120,720
+27.10.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+28.10.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+29.10.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka Q2,SI87654321,750,150,900
+30.10.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+31.10.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka R2,SI98765432,850,170,1020
+01.11.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+02.11.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+03.11.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka S2,SI78901234,900,180,1080
+04.11.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+05.11.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka T2,SI90123456,600,120,720
+06.11.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+07.11.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+08.11.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka U2,SI87654321,750,150,900
+09.11.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+10.11.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka V2,SI98765432,850,170,1020
+11.11.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+12.11.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+13.11.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka W2,SI78901234,900,180,1080
+14.11.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+15.11.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka X2,SI90123456,600,120,720
+16.11.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+17.11.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+18.11.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka Y2,SI87654321,750,150,900
+19.11.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+20.11.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka Z2,SI98765432,850,170,1020
+21.11.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+22.11.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+23.11.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka A3,SI78901234,900,180,1080
+24.11.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+25.11.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka B3,SI90123456,600,120,720
+26.11.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+27.11.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+28.11.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka C3,SI87654321,750,150,900
+29.11.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+30.11.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka D3,SI98765432,850,170,1020
+01.12.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+02.12.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+03.12.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka E3,SI78901234,900,180,1080
+04.12.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+05.12.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka F3,SI90123456,600,120,720
+06.12.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+07.12.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+08.12.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka G3,SI87654321,750,150,900
+09.12.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+10.12.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka H3,SI98765432,850,170,1020
+11.12.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+12.12.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+13.12.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka I3,SI78901234,900,180,1080
+14.12.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+15.12.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka J3,SI90123456,600,120,720
+16.12.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+17.12.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+18.12.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka K3,SI87654321,750,150,900
+19.12.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+20.12.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka L3,SI98765432,850,170,1020
+21.12.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
+22.12.2022,Strošek,Strošek pisarniškega materiala,Stroški pisarne,Pisarniški materiali,,SI90123456,150,30,180
+23.12.2022,Prodaja,Prodaja izdelka B,Prihodki,Prodajni prihodki,Stranka M3,SI78901234,900,180,1080
+24.12.2022,Strošek,Strošek telekomunikacij,Stroški storitev,Stroški storitev,,SI56789012,100,20,120
+25.12.2022,Prodaja,Prodaja izdelka C,Prihodki,Prodajni prihodki,Stranka N3,SI90123456,600,120,720
+26.12.2022,Strošek,Strošek plače,Stroški dela,Stroški dela,,SI23456789,1700,340,2040
+27.12.2022,Strošek,Strošek prevoza,Stroški prevoza,Stroški prevoza,,SI65432109,230,46,276
+28.12.2022,Prodaja,Prodaja izdelka D,Prihodki,Prodajni prihodki,Stranka O3,SI87654321,750,150,900
+29.12.2022,Strošek,Nabava materialov,Stroški nabave,Nabava materialov,,SI12345678,450,90,540
+30.12.2022,Prodaja,Prodaja izdelka A,Prihodki,Prodajni prihodki,Stranka P3,SI98765432,850,170,1020
+31.12.2022,Strošek,Strošek potovanja,Stroški potovanj,Stroški potovanj,,SI56789012,200,40,240
