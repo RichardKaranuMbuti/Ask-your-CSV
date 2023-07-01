@@ -17,7 +17,8 @@ import os
 from django.http import HttpResponseServerError
 from django.conf import settings
 import json
-
+from django.core.exceptions import ObjectDoesNotExist
+import uuid
 
 
 
@@ -78,30 +79,31 @@ def upload_csv_file(request):
         file = request.FILES.get('file')
         metadata = request.POST.get('metadata')
 
-        # Save the file to a desired location
-        file_path = handle_uploaded_file(file)
-
         try:
             # Find the company instance
             company_instance = Company.objects.get(company=company)
 
+            # Save the file to a desired location
+            file_path = handle_uploaded_file(file)
+
             # Create a new CSVFile instance and save it to the database
-            csv_file = CSVFile(company=company_instance, file=file_path, metadata=metadata)
+            csv_file = CSVFile(company=company_instance, metadata=metadata, file=file_path)
             csv_file.save()
 
-            return Response({'message': 'CSV file uploaded successfully.'})
+            return JsonResponse({'message': 'CSV file uploaded successfully.'})
         except Company.DoesNotExist:
-            return Response({'message': 'Company not found.'}, status=404)
+            return JsonResponse({'message': 'Company not found.'}, status=404)
         except Exception as e:
             error_message = f"Error saving CSV file: {str(e)}"
             print(error_message)
-            return Response({'message': error_message}, status=500)
+            return JsonResponse({'message': error_message}, status=500)
     else:
-        return Response({'message': 'Invalid request method.'}, status=400)
+        return JsonResponse({'message': 'Invalid request method.'}, status=400)
+
 
 def handle_uploaded_file(file):
     if file is not None:
-        # Save the uploaded file to the 'media' directory
+        # Save the uploaded file to the 'media' directory with the original file name
         file_path = os.path.join(settings.MEDIA_ROOT, file.name)
 
         with open(file_path, 'wb+') as destination:
@@ -113,14 +115,21 @@ def handle_uploaded_file(file):
         raise ValueError("No file provided.")
 
 
+
 # Get all files for a company
 def get_csv_files(request, company_id):
-    company = Company.objects.get(pk=company_id)
-    csv_files = company.csv_files.all()
+    try:
+        company = Company.objects.get(pk=company_id)
+        csv_files = company.csv_files.all()
 
-    file_paths = [csv_file.file.path for csv_file in csv_files]
+        file_paths = [csv_file.file.path for csv_file in csv_files]
 
-    return file_paths
+        return file_paths
+    
+    except ObjectDoesNotExist:
+        return JsonResponse({'error': 'Company not found.'}, status=404)
+    except FileNotFoundError as e:
+        return JsonResponse({'error': str(e)}, status=404)
 
 # View all csv files for a company
 @api_view(['GET'])
@@ -131,8 +140,12 @@ def get_csv_files_list(request, company_id):
         csv_files = company.csv_files.all()
 
         if csv_files:
-            file_paths = [csv_file.file.path for csv_file in csv_files]
-            return Response({'csv_files': file_paths})
+            file_data = []
+            for csv_file in csv_files:
+                file_path, file_name = handle_uploaded_file(csv_file.file)
+                file_data.append({'file_path': file_path, 'file_name': file_name})
+                
+            return Response({'csv_files': file_data})
         else:
             return Response({'message': 'No CSV files found for this company.'})
     except Company.DoesNotExist:
@@ -178,7 +191,6 @@ def chat_with_csv(request, company_id):
     # Load the OpenAI API key from the apikey model
     api_key_instance = ApiKey.objects.first()
     
-
     if api_key_instance:
         openai_api_key = api_key_instance.api_key
         
@@ -187,6 +199,7 @@ def chat_with_csv(request, company_id):
 
     # Fetch CSV files using the company ID
     file_paths = get_csv_files(request, company_id)
+    print("This is filepaths: ", file_paths)
 
     # Process CSV files
     if file_paths:
