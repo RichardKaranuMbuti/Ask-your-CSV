@@ -116,7 +116,7 @@ def handle_uploaded_file(file):
 
 
 
-# Get all files for a company
+# Get all files for a company created
 def get_csv_files(request, company_id):
     try:
         company = Company.objects.get(pk=company_id)

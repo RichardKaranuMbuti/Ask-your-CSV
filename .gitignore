@@ -2,3 +2,4 @@ venv/
 .env
 description.txt
 db.sqlite3
+media/
