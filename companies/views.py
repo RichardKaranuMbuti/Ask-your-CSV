@@ -17,6 +17,7 @@ import os
 from django.http import HttpResponseServerError
 from django.conf import settings
 import json
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
@@ -115,12 +116,17 @@ def handle_uploaded_file(file):
 
 # Get all files for a company
 def get_csv_files(request, company_id):
-    company = Company.objects.get(pk=company_id)
-    csv_files = company.csv_files.all()
+    try:
+        company = Company.objects.get(pk=company_id)
+        csv_files = company.csv_files.all()
 
-    file_paths = [csv_file.file.path for csv_file in csv_files]
+        file_paths = [csv_file.file.path for csv_file in csv_files]
 
-    return file_paths
+        return file_paths
+    except ObjectDoesNotExist:
+        return JsonResponse({'error': 'Company not found.'}, status=404)
+    except FileNotFoundError as e:
+        return JsonResponse({'error': str(e)}, status=404)
 
 # View all csv files for a company
 @api_view(['GET'])
@@ -178,7 +184,6 @@ def chat_with_csv(request, company_id):
     # Load the OpenAI API key from the apikey model
     api_key_instance = ApiKey.objects.first()
     
-
     if api_key_instance:
         openai_api_key = api_key_instance.api_key
         
