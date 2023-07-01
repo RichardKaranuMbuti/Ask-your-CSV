@@ -201,7 +201,7 @@ def chat_with_csv(request, company_id):
 @csrf_exempt
 def update_api_key(request):
     if request.method == 'POST':
-        api_key = request.GET.get('api_key')
+        api_key = request.POST.get('api_key')  # Retrieve the API key from the request data
 
         # Fetch the existing API key instance
         api_key_instance = ApiKey.objects.first()
