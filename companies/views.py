@@ -176,13 +176,21 @@ def chat_with_csv(request, company_id):
     prompt = json.loads(request.body)['prompt']
 
     # Load the OpenAI API key from the apikey model
-    OPENAI_API_KEY = ApiKey.objects.first().api_key
+    api_key_instance = ApiKey.objects.first()
+    
+
+    if api_key_instance:
+        openai_api_key = api_key_instance.api_key
+        
+    else:
+        return JsonResponse({'response': 'No API key found.'})
+
     # Fetch CSV files using the company ID
     file_paths = get_csv_files(request, company_id)
 
     # Process CSV files
     if file_paths:
-        agent = create_csv_agent(OpenAI(), file_paths, verbose=True)
+        agent = create_csv_agent(OpenAI(openai_api_key=openai_api_key), file_paths, verbose=True)
         user_question = prompt
 
         if user_question:
@@ -194,7 +202,6 @@ def chat_with_csv(request, company_id):
 
     # Return a default response if no CSV files are found
     return JsonResponse({'response': 'No CSV files found.'})
-
 
 
 # Save and update API key
