@@ -140,12 +140,12 @@ def get_csv_files_list(request, company_id):
         csv_files = company.csv_files.all()
 
         if csv_files:
-            file_data = []
+            file_paths = []
             for csv_file in csv_files:
-                file_path, file_name = handle_uploaded_file(csv_file.file)
-                file_data.append({'file_path': file_path, 'file_name': file_name})
-                
-            return Response({'csv_files': file_data})
+                file_path = handle_uploaded_file(csv_file.file)
+                file_paths.append(file_path)
+
+            return Response({'csv_files': file_paths})
         else:
             return Response({'message': 'No CSV files found for this company.'})
     except Company.DoesNotExist:
