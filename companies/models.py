@@ -2,29 +2,21 @@ from django.db import models
 import string
 import random
 from django.urls import reverse
-
+from django.utils import timezone
 
 # Create your models here.
+
 class UserSignup(models.Model):
-    user_id = models.CharField(max_length=8, primary_key=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=100)
-    password = models.CharField(max_length=100)
-    confirm_password = models.CharField(max_length=100)
+    user_id = models.CharField(max_length=20, primary_key=True)
+    created_on = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):
-        if not self.user_id:
-            self.user_id = self.generate_user_id()
-        super().save(*args, **kwargs)
-
-    def generate_user_id(self):
-        digits = ''.join(random.choices(string.digits, k=5))
-        letters = ''.join(random.choices(string.ascii_letters, k=3))
-        return digits + letters
+        if not self.pk:
+            self.created_on = timezone.now()
+        return super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.user_id}: {self.first_name} {self.last_name}"
+        return f"{self.user_id}"
 
 # Company Model
 class Company(models.Model):
@@ -65,3 +57,4 @@ class ApiKey(models.Model):
 
     def __str__(self):
         return self.api_key
+

@@ -20,8 +20,35 @@ import json
 from django.core.exceptions import ObjectDoesNotExist
 import uuid
 
+@csrf_exempt
+def save_user_id(request):
+    if request.method == 'POST':
+        user_id = request.GET.get('user_id')
 
+        try:
+            # Check if the user_id already exists
+            existing_user = UserSignup.objects.filter(user_id=user_id).first()
+
+            if existing_user:
+                # user_id already exists, return an appropriate response
+                return JsonResponse({'message': 'user_id already exists.'}, status=400)
+            else:
+                # Create a new UserSignup instance
+                new_user = UserSignup(user_id=user_id)
+                new_user.save()
+
+                # Return a success response
+                return JsonResponse({'message': 'user_id saved successfully.'})
+        
+        except Exception as e:
+            error_message = f"Error saving user_id: {str(e)}"
+            print(error_message)
+            return JsonResponse({'message': error_message}, status=500)
+    else:
+        return JsonResponse({'message': 'Invalid request method.'}, status=400)
 # Signup view
+
+'''
 @csrf_exempt
 def signup_view(request):
     if request.method == 'POST':
@@ -80,6 +107,7 @@ def login_view(request):
             return JsonResponse({'error': 'Incorrect login details'})
 
     return JsonResponse({'error': 'Invalid Request'})
+'''
 
 
 # Create Company API
@@ -362,6 +390,7 @@ def chat_with_csv(request):
             print(user_question)
 
             if user_question:
+                print("user question: ", user_question)
                 response = agent.run(user_question)
                 print(response)
 
@@ -386,6 +415,22 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import os
 
+
+def delete_csv_file(csv_file):
+    try:
+        file_path = os.path.join(settings.MEDIA_ROOT, str(csv_file.file))
+        print("Deleting file:", file_path)
+
+        if os.path.exists(file_path):
+            # Delete the file
+            os.remove(file_path)
+
+        # Delete the CSVFile instance
+        csv_file.delete()
+    except Exception as e:
+        error_message = f"Error deleting CSV file: {str(e)}"
+        print(error_message)
+
 @csrf_exempt
 def delete_csv_files(request):
     try:
@@ -401,20 +446,14 @@ def delete_csv_files(request):
 
         for file_name in file_names:
             file_name = file_name.strip()
-            print("file name:", file_name)
+            print("File name:", file_name)
 
-            # Build the absolute file path
-            file_path = os.path.join(settings.MEDIA_ROOT, file_name)
-            print("file path:", file_path)
+            # Find the corresponding CSVFile instance
+            csv_file = CSVFile.objects.filter(company=company, file__endswith=file_name).first()
 
-            if os.path.exists(file_path):
-                # Delete the file
-                os.remove(file_path)
+            if csv_file:
+                delete_csv_file(csv_file)
                 deleted_files.append(file_name)
-
-                # Update the corresponding CSVFile instance
-                csv_file = CSVFile.objects.get(company=company, file=file_name)
-                csv_file.delete()
             else:
                 not_found_files.append(file_name)
 
@@ -430,8 +469,6 @@ def delete_csv_files(request):
         return JsonResponse({'message': 'User not found.'}, status=404)
     except Company.DoesNotExist:
         return JsonResponse({'message': 'Company not found.'}, status=404)
-    except CSVFile.DoesNotExist:
-        return JsonResponse({'message': 'CSVFile not found.'}, status=404)
     except Exception as e:
         error_message = f"Error deleting CSV files: {str(e)}"
         print(error_message)

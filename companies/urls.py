@@ -3,8 +3,9 @@ from . import views
 from django.conf import settings
 
 urlpatterns = [
-    path('signup/', views.signup_view, name='signup'),
-    path('login/', views.login_view, name='login'),
+    #path('signup/', views.signup_view, name='signup'),
+    path('save/user/', views.save_user_id, name='save-user-id'),
+    #path('login/', views.login_view, name='login'),
     path('company/create/', views.create_company), # working
     path('user/companies/', views.get_user_companies, name='get_user_companies'),
     #path('upload-file/', views.upload_file, name='upload-file'),

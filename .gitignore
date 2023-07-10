@@ -1,5 +1,6 @@
 venv/
 .env
 description.txt
-db.sqlite3
 media/
+api_test.py
+db.sqlite3

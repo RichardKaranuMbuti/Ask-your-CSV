@@ -76,10 +76,25 @@ WSGI_APPLICATION = 'company_csv_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Development Database Configs
+'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+'''
+# Production Database Configs
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'company_ask_csv_app',
+        'USER': 'root',
+        'PASSWORD': 'Your_password',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
