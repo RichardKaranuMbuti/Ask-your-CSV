@@ -7,7 +7,7 @@ from django.utils import timezone
 # Create your models here.
 
 class UserSignup(models.Model):
-    user_id = models.CharField(max_length=20, primary_key=True)
+    user_id = models.CharField(max_length=50, primary_key=True)
     created_on = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):
