@@ -136,7 +136,10 @@ def create_company(request):
         company = Company(company_name=company_name, created_by=user)
         company.save()
 
-        return Response({'message': 'Company created successfully!', 'company_id': company.company_id})
+        return Response({'message': 'Company created successfully!',
+                          'company_id': company.company_id,
+                          'company_name': company.company_name,
+                         })
     except UserSignup.DoesNotExist:
         return Response({'message': 'User not found.'}, status=404)
     except Exception as e:
@@ -186,14 +189,17 @@ def get_user_companies(request):
     try:
         user = UserSignup.objects.get(user_id=user_id)
         companies = Company.objects.filter(created_by=user)
-        company_names = [company.company_name for company in companies]
-        return JsonResponse({'companies': company_names})
+        company_data = [{'company_name': company.company_name, 'company_id': company.company_id}
+                        for company in companies]
+
+        return JsonResponse({'companies': company_data})
     except UserSignup.DoesNotExist:
         return JsonResponse({'message': 'User not found.'}, status=404)
     except Exception as e:
         error_message = f"Error retrieving companies: {str(e)}"
         print(error_message)
         return JsonResponse({'message': error_message}, status=500)
+
 
 
 # upload CSV file
@@ -283,6 +289,8 @@ def get_csv_files(request):
 # View all csv files for a company- Send to frontend
 import os
 
+import os
+
 @csrf_exempt
 def get_csv_names(request):
     try:
@@ -301,9 +309,10 @@ def get_csv_names(request):
         print(company)
 
         csv_files = company.csv_files.all()
-        file_names = [os.path.basename(csv_file.file.name) for csv_file in csv_files]
+        file_data = [{'file_name': os.path.basename(csv_file.file.name), 'description': csv_file.description}
+                     for csv_file in csv_files]
 
-        return JsonResponse({'file_names': file_names})
+        return JsonResponse({'file_data': file_data})
     
     except UserSignup.DoesNotExist:
         return JsonResponse({'message': 'User not found.'}, status=404)
@@ -313,6 +322,7 @@ def get_csv_names(request):
         error_message = f"Error retrieving CSV names: {str(e)}"
         print(error_message)
         return JsonResponse({'message': error_message}, status=500)
+
 
 '''
 
@@ -416,6 +426,7 @@ from django.views.decorators.csrf import csrf_exempt
 import os
 
 
+# Function to delete a CSV file
 def delete_csv_file(csv_file):
     try:
         file_path = os.path.join(settings.MEDIA_ROOT, str(csv_file.file))
@@ -431,6 +442,22 @@ def delete_csv_file(csv_file):
         error_message = f"Error deleting CSV file: {str(e)}"
         print(error_message)
 
+# Function to get file descriptions for a given list of file names
+def get_file_descriptions(company, file_names):
+    file_descriptions = {}
+    for file_name in file_names:
+        file_name = file_name.strip()
+        print("File name:", file_name)
+
+        # Find the corresponding CSVFile instance
+        csv_file = CSVFile.objects.filter(company=company, file__endswith=file_name).first()
+
+        if csv_file:
+            file_descriptions[file_name] = csv_file.description
+
+    return file_descriptions
+
+# View to delete CSV files and return file descriptions
 @csrf_exempt
 def delete_csv_files(request):
     try:
@@ -452,14 +479,19 @@ def delete_csv_files(request):
             csv_file = CSVFile.objects.filter(company=company, file__endswith=file_name).first()
 
             if csv_file:
+                # Delete the file and the CSVFile instance
                 delete_csv_file(csv_file)
                 deleted_files.append(file_name)
             else:
                 not_found_files.append(file_name)
 
+        # Get file descriptions for the deleted files
+        file_descriptions = get_file_descriptions(company, deleted_files)
+
         response_data = {
             'message': 'CSV files deleted successfully.',
-            'deleted_files': deleted_files,
+            'deleted_files': [{'file_name': file_name, 'description': file_descriptions.get(file_name, "")}
+                              for file_name in deleted_files],
             'not_found_files': not_found_files
         }
 
