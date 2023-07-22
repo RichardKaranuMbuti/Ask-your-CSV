@@ -1,0 +1,22 @@
+/* styles.css */
+
+/* Add custom styles for the chat container */
+.chat-container {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  /* Add custom styles for the user question input field */
+  .user-question-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Add custom styles for the chat messages */
+  .chat-message {
+    margin-bottom: 10px;
+  }
+  
