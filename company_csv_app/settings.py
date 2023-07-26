@@ -45,13 +45,13 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'company_csv_app.urls'
@@ -179,9 +179,13 @@ CORS_ALLOW_HEADERS = [
     # Add any other allowed headers as needed
 ]
 
+# enable CORS logging
+
+CORS_REPLACE_HTTPS_REFERER = True
+CORS_REPLACE_HTTP_REFERER = True
 
 
-# Optional: Allow credentials (e.g., cookies) to be included in CORS requests.
+# Allow credentials (e.g., cookies) to be included in CORS requests.- Oprional
 CORS_ALLOW_CREDENTIALS = True
 
 
