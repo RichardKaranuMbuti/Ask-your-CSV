@@ -80,13 +80,16 @@ WSGI_APPLICATION = 'company_csv_app.wsgi.application'
 
 # Development Database Configs
 
-# DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
-#    }
-#}
-#
+
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+'''
+
 
 # Production Database Configs
 DATABASES = {
@@ -99,7 +102,6 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -155,10 +157,12 @@ DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 CORS_ALLOW_ALL_ORIGINS = False
 
+
+
 CORS_ALLOWED_ORIGINS = [
      # Add your frontend URL here
-    #"http://127.0.0.1:5500",
-    #"http://127.0.0.1",
+    #'http://127.0.0.1:5500',
+    #'http://127.0.0.1',
     # Add more allowed origins as needed
     'https://miksi.io',
     'https://miksi.flutterflow.app'
@@ -174,10 +178,26 @@ CORS_ALLOW_METHODS = [
 ]
 
 CORS_ALLOW_HEADERS = [
-    'Content-Type',
+    'Accept',
+    'Accept-Encoding',
     'Authorization',
-    # Add any other allowed headers as needed
+    'Content-Type',
+    'Origin',
+    'Referer',
+    'User-Agent',
+    # Add other headers here as needed
 ]
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS'
+]
+
+
 
 # enable CORS logging
 

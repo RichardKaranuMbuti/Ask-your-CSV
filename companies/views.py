@@ -46,9 +46,13 @@ def save_user_id(request):
             return JsonResponse({'message': error_message}, status=500)
     else:
         return JsonResponse({'message': 'Invalid request method.'}, status=400)
+    
+
+<<<<<<< HEAD
+
+=======
 # Signup view
-
-
+>>>>>>> fa7f795622416aec8005d259e517f892276a0568
 @csrf_exempt
 def signup_view(request):
     if request.method == 'POST':
@@ -61,7 +65,7 @@ def signup_view(request):
 
         # Check if a user with the provided email already exists
         if UserSignup.objects.filter(email=email).exists():
-            return JsonResponse({'message': 'User with this email already exists'})
+            return JsonResponse({'message': 'The email provided is already in use'})
 
         # Check if password and confirm_password match
         if password != confirm_password:
@@ -97,7 +101,7 @@ def login_view(request):
             user = UserSignup.objects.get(email=email)
             if user.password == password:
                 # Correct login details
-                url = f"/user/{user.user_id}/"  # URL with user ID
+                url = f"/user_id={user.user_id}/"  # URL with user ID
                 return JsonResponse({'url': url})
             else:
                 # Incorrect password
@@ -136,10 +140,9 @@ def create_company(request):
         company = Company(company_name=company_name, created_by=user)
         company.save()
 
-        return Response({'message': 'Company created successfully!',
-                          'company_id': company.company_id,
-                          'company_name': company.company_name,
-                         })
+        message = f"Company {company.company_name} created successfully!"
+
+        return Response({'message': message})
     except UserSignup.DoesNotExist:
         return Response({'message': 'User not found.'}, status=404)
     except Exception as e:
@@ -289,7 +292,6 @@ def get_csv_files(request):
 # View all csv files for a company- Send to frontend
 import os
 
-import os
 
 @csrf_exempt
 def get_csv_names(request):
