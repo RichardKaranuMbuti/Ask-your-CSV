@@ -80,13 +80,15 @@ WSGI_APPLICATION = 'company_csv_app.wsgi.application'
 
 # Development Database Configs
 
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''
+
 '''
 # Production Database Configs
 DATABASES = {
@@ -99,8 +101,8 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-'''
 
+'''
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -153,13 +155,34 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
+
 CORS_ALLOWED_ORIGINS = [
      # Add your frontend URL here
-    "http://127.0.0.1:5500", 
-    "http://127.0.0.1",
+    #'http://127.0.0.1:5500', 
+    #'http://127.0.0.1',
     # Add more allowed origins as needed
-    'http://miksi.io',
-    'http://miksi.flutterflow.app'
+    'https://miksi.io',
+    'https://miksi.flutterflow.app'
+]
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS'
+]
+
+CORS_ALLOW_HEADERS = [
+    'Accept',
+    'Accept-Encoding',
+    'Authorization',
+    'Content-Type',
+    'Origin',
+    'Referer',
+    'User-Agent',
+    # Add other headers here as needed
 ]
 
 # Optional: Allow credentials (e.g., cookies) to be included in CORS requests.
