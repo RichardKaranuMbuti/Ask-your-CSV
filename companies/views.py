@@ -13,6 +13,7 @@ from django.http import HttpResponse
 from dotenv import load_dotenv
 from langchain.agents import create_csv_agent
 from langchain.llms import OpenAI
+from langchain.memory import ConversationBufferMemory
 import os
 from django.http import HttpResponseServerError
 from django.conf import settings
@@ -20,6 +21,8 @@ import json
 from django.core.exceptions import ObjectDoesNotExist
 import uuid
 
+
+'''
 @csrf_exempt
 def save_user_id(request):
     if request.method == 'POST':
@@ -46,7 +49,7 @@ def save_user_id(request):
             return JsonResponse({'message': error_message}, status=500)
     else:
         return JsonResponse({'message': 'Invalid request method.'}, status=400)
-    
+'''  
 
 # Signup view
 @csrf_exempt
@@ -97,8 +100,9 @@ def login_view(request):
             user = UserSignup.objects.get(email=email)
             if user.password == password:
                 # Correct login details
-                url = f"/user_id={user.user_id}/"  # URL with user ID
-                return JsonResponse({'url': url})
+                url = "/users/" 
+                user_id = user.user_id
+                return JsonResponse({'url': url, 'user_id': user_id})
             else:
                 # Incorrect password
                 return JsonResponse({'error': 'Incorrect login details'})
@@ -107,7 +111,6 @@ def login_view(request):
             return JsonResponse({'error': 'Incorrect login details'})
 
     return JsonResponse({'error': 'Invalid Request'})
-
 
 
 # Create Company API
@@ -202,6 +205,13 @@ def get_user_companies(request):
 
 
 # upload CSV file
+
+# Function to check if a file name already exists for the given company
+def is_file_name_unique(company, file_name):
+    return not CSVFile.objects.filter(company_id=company.company_id,
+                                       file=os.path.join(settings.MEDIA_ROOT, file_name)).exists()
+
+# upload CSV file
 @api_view(['POST'])
 @csrf_exempt
 def upload_csv_file(request):
@@ -217,6 +227,10 @@ def upload_csv_file(request):
 
             # Find the company instance based on the user and company name
             company = Company.objects.get(created_by=user, company_name=company_name)
+
+            # Check if the file name is unique for the company
+            if not is_file_name_unique(company, file.name):
+                return JsonResponse({'message': 'A file with the same name already exists for this company.'}, status=400)
 
             # Save the file to a desired location
             file_path = handle_uploaded_file(file)
@@ -237,6 +251,7 @@ def upload_csv_file(request):
     else:
         return JsonResponse({'message': 'Invalid request method.'}, status=400)
 
+# Function to handle uploaded file
 def handle_uploaded_file(file):
     if file is not None:
         # Save the uploaded file to the 'media' directory with the original file name
@@ -249,7 +264,6 @@ def handle_uploaded_file(file):
         return file_path
     else:
         raise ValueError("No file provided.")
-
 
 
 # Get all files for a company created-as paths to be used by AI agent
@@ -287,8 +301,6 @@ def get_csv_files(request):
 
 # View all csv files for a company- Send to frontend
 import os
-
-
 @csrf_exempt
 def get_csv_names(request):
     try:
@@ -355,8 +367,10 @@ def chat(request):
 load_dotenv()
 
 # Chat with csv 
+from .helpers import CSV_Agent
 @csrf_exempt
 def chat_with_csv(request):
+    csv_memory = ConversationBufferMemory()
     try:
         # Extract user_id and company_name from URL query parameters
         user_id = request.GET.get('user_id')
@@ -393,13 +407,18 @@ def chat_with_csv(request):
 
         # Process CSV files
         if file_paths:
-            agent = create_csv_agent(OpenAI(openai_api_key=openai_api_key), file_paths, verbose=True)
+            # Create the CSV agent
+            csv_agent=create_csv_agent(OpenAI(openai_api_key=openai_api_key, temperature=0.0),
+                                        file_paths,  verbose=True, memory=csv_memory)
+           
+
+            # Get the response from the agent
             user_question = prompt
             print(user_question)
 
             if user_question:
                 print("user question: ", user_question)
-                response = agent.run(user_question)
+                response = csv_agent.run(user_question)
                 print(response)
 
             # Return the response as JSON
@@ -416,6 +435,8 @@ def chat_with_csv(request):
         error_message = f"Error processing request: {str(e)}"
         print(error_message)
         return JsonResponse({'response': error_message}, status=500)
+
+
 
 # Delete csv
 from django.core.files import File
@@ -440,6 +461,7 @@ def delete_csv_file(csv_file):
         error_message = f"Error deleting CSV file: {str(e)}"
         print(error_message)
 
+
 # Function to get file descriptions for a given list of file names
 def get_file_descriptions(company, file_names):
     file_descriptions = {}
@@ -454,6 +476,9 @@ def get_file_descriptions(company, file_names):
             file_descriptions[file_name] = csv_file.description
 
     return file_descriptions
+
+
+
 
 # View to delete CSV files and return file descriptions
 @csrf_exempt
@@ -504,6 +529,8 @@ def delete_csv_files(request):
         print(error_message)
         return JsonResponse({'message': error_message}, status=500)
 
+
+
 # Save and update API key
 @csrf_exempt
 def update_api_key(request):
@@ -526,6 +553,8 @@ def update_api_key(request):
             return JsonResponse({'message': 'API key created successfully.'})
 
     return JsonResponse({'message': 'Invalid request method.'})
+
+
 
 # Delete api key api 
 def delete_api_key(request):
