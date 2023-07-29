@@ -21,7 +21,6 @@ import json
 from django.core.exceptions import ObjectDoesNotExist
 import uuid
 
-
 '''
 @csrf_exempt
 def save_user_id(request):
@@ -42,14 +41,14 @@ def save_user_id(request):
 
                 # Return a success response
                 return JsonResponse({'message': 'user_id saved successfully.'})
-        
+
         except Exception as e:
             error_message = f"Error saving user_id: {str(e)}"
             print(error_message)
             return JsonResponse({'message': error_message}, status=500)
     else:
         return JsonResponse({'message': 'Invalid request method.'}, status=400)
-'''  
+''' 
 
 # Signup view
 @csrf_exempt
@@ -147,7 +146,7 @@ def create_company(request):
     except Exception as e:
         return Response({'message': f'Error creating company: {str(e)}'}, status=500)
 
-''' 
+'''
 @api_view(['POST'])
 @csrf_exempt
 def upload_file(request):
@@ -288,7 +287,7 @@ def get_csv_files(request):
         file_paths = [csv_file.file.path for csv_file in csv_files]
 
         return JsonResponse({'file_paths': file_paths})
-    
+
     except UserSignup.DoesNotExist:
         return JsonResponse({'message': 'User not found.'}, status=404)
     except Company.DoesNotExist:
@@ -323,7 +322,7 @@ def get_csv_names(request):
                      for csv_file in csv_files]
 
         return JsonResponse({'file_data': file_data})
-    
+
     except UserSignup.DoesNotExist:
         return JsonResponse({'message': 'User not found.'}, status=404)
     except Company.DoesNotExist:
@@ -367,7 +366,6 @@ def chat(request):
 load_dotenv()
 
 # Chat with csv 
-from .helpers import CSV_Agent
 @csrf_exempt
 def chat_with_csv(request):
     csv_memory = ConversationBufferMemory()
@@ -378,9 +376,9 @@ def chat_with_csv(request):
         print(user_id)
         print(company_name)
 
-        # Extract prompt from request body 
+        # Extract prompt from request body
         prompt = request.POST.get('prompt')
-        
+
         print("prompt:", prompt)
 
         # Fetch CSV files using the company ID
@@ -553,8 +551,6 @@ def update_api_key(request):
             return JsonResponse({'message': 'API key created successfully.'})
 
     return JsonResponse({'message': 'Invalid request method.'})
-
-
 
 # Delete api key api 
 def delete_api_key(request):

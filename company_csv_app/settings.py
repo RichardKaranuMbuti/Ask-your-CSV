@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-1^kwd*=6q1cls&!vwcr8!c52kf*8mv9o-*#(j)!xjqn_*+7ifv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['acelogic.pythonanywhere.com']
 
 
 # Application definition
@@ -45,13 +45,13 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'company_csv_app.urls'
@@ -81,28 +81,27 @@ WSGI_APPLICATION = 'company_csv_app.wsgi.application'
 # Development Database Configs
 
 '''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-'''
 
-#'''
+'''
 # Production Database Configs
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'company_ask_csv_app',
-        'USER': 'root',
-        'PASSWORD': 'Your_password',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'engine',
+        'NAME': 'Acelogic$name',
+        'USER': 'Acelogic',
+        'PASSWORD': 'Password',
+        'HOST': 'host',
+        'PORT': 'portno',
     }
 }
 
-#'''
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -155,10 +154,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
+CORS_ALLOW_ALL_ORIGINS = False
+
+
 
 CORS_ALLOWED_ORIGINS = [
      # Add your frontend URL here
-    #'http://127.0.0.1:5500', 
+    #'http://127.0.0.1:5500',
     #'http://127.0.0.1',
     # Add more allowed origins as needed
     'https://miksi.io',
@@ -185,7 +187,24 @@ CORS_ALLOW_HEADERS = [
     # Add other headers here as needed
 ]
 
-# Optional: Allow credentials (e.g., cookies) to be included in CORS requests.
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS'
+]
+
+
+
+# enable CORS logging
+
+CORS_REPLACE_HTTPS_REFERER = True
+CORS_REPLACE_HTTP_REFERER = True
+
+
+# Allow credentials (e.g., cookies) to be included in CORS requests.- Oprional
 CORS_ALLOW_CREDENTIALS = True
 
 
