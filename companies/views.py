@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
-from .models import Company, CSVFile, ApiKey , UserSignup
+from .models import Company, CSVFile, ApiKey , UserSignup, Room, Message
 from .serializers import CSVFileSerializer
 from django.http import HttpResponse
 from dotenv import load_dotenv
@@ -285,8 +285,13 @@ def get_csv_files(request):
 
         csv_files = company.csv_files.all()
         file_paths = [csv_file.file.path for csv_file in csv_files]
+        file_info = inspect_user_csv(file_paths)
 
-        return JsonResponse({'file_paths': file_paths})
+        return JsonResponse({'file_info': file_info})
+
+
+        #return JsonResponse({'file_paths': file_paths})
+        
 
     except UserSignup.DoesNotExist:
         return JsonResponse({'message': 'User not found.'}, status=404)
@@ -296,6 +301,38 @@ def get_csv_files(request):
         error_message = f"Error retrieving CSV files: {str(e)}"
         print(error_message)
         return JsonResponse({'message': error_message}, status=500)
+
+
+# Inspect csv files
+import pandas as pd
+from django.http import JsonResponse
+
+def inspect_user_csv(file_paths):
+    data = {}
+
+    for file_path in file_paths:
+        try:
+            # Read the CSV file using pandas
+            df = pd.read_csv(file_path)
+
+            # Get the file name from the path
+            file_name = file_path.split('\\')[-1]  # For Windows use file_path.split('\\')[-1]
+
+            # If the CSV file has multiple worksheets, extract the column names for each sheet
+            if isinstance(df, dict):
+                worksheet_names = list(df.keys())
+                worksheet_columns = {file_name: {worksheet_name: df[worksheet_name].columns.tolist()} for worksheet_name in worksheet_names}
+                data.update(worksheet_columns)
+            else:
+                # If the CSV file has only one worksheet, extract the column names directly
+                data[file_name] = df.columns.tolist()
+
+        except Exception as e:
+            error_message = f"Error processing file '{file_path}': {str(e)}"
+            print(error_message)
+            data[file_path] = error_message
+
+    return data
 
 
 # View all csv files for a company- Send to frontend
@@ -362,26 +399,16 @@ def chat(request):
 
 '''
 
+from django.shortcuts import get_object_or_404
 
-load_dotenv()
-
-# Chat with csv 
 @csrf_exempt
-def chat_with_csv(request):
-    csv_memory = ConversationBufferMemory()
+def create_room(request):
     try:
-        # Extract user_id and company_name from URL query parameters
+        # Extract user_id from URL query parameters
         user_id = request.GET.get('user_id')
-        company_name = request.GET.get('company_name')  # Use GET instead of POST
-        print(user_id)
-        print(company_name)
-
-        # Extract prompt from request body
-        prompt = request.POST.get('prompt')
-
-        print("prompt:", prompt)
-
-        # Fetch CSV files using the company ID
+        company_name = request.GET.get('company_name')
+        print("user_id:", user_id)
+        print("company_name:", company_name)
 
         # Find the user
         user = UserSignup.objects.get(user_id=user_id)
@@ -391,9 +418,58 @@ def chat_with_csv(request):
         company = Company.objects.get(created_by=user, company_name=company_name)
         print("company:", company)
 
+        # Create a new room for the company
+        new_room = Room.objects.create(
+            room_name="New Room",
+            company=company
+        )
+        print("new_room:", new_room)
+
+        # Return the room_id as JSON response
+        return JsonResponse({'room_id': new_room.room_id})
+
+    except UserSignup.DoesNotExist:
+        return JsonResponse({'response': 'User not found.'}, status=404)
+    except Company.DoesNotExist:
+        return JsonResponse({'response': 'Company not found.'}, status=404)
+    except Exception as e:
+        error_message = f"Error creating room: {str(e)}"
+        print(error_message)
+        return JsonResponse({'response': error_message}, status=500)
+
+load_dotenv()
+
+from django.utils import timezone
+
+@csrf_exempt
+def chat_with_csv(request):
+    try:
+        # Extract room_id from request POST data
+        room_id = request.POST.get('room_id')
+        if not room_id:
+            return JsonResponse({'response': 'Room ID not found in the request.'})
+
+        # Extract user_id and company_name from URL query parameters
+        user_id = request.GET.get('user_id')
+        company_name = request.GET.get('company_name')  # Use GET instead of POST
+
+        # Extract prompt from request body
+        prompt = request.POST.get('prompt')
+
+        # Save the prompt in the Message model
+        if prompt:
+            print("prompt:", prompt)
+            room = Room.objects.get(room_id=room_id) 
+            print(" first room:", room)
+        
+        # Find the user
+        user = UserSignup.objects.get(user_id=user_id)
+
+        # Find the company instance based on the user and company name
+        company = Company.objects.get(created_by=user, company_name=company_name)
+
         csv_files = company.csv_files.all()
         file_paths = [csv_file.file.path for csv_file in csv_files]
-        print("file_paths:", file_paths)
 
         # Load the OpenAI API key from the apikey model
         api_key_instance = ApiKey.objects.first()
@@ -406,21 +482,28 @@ def chat_with_csv(request):
         # Process CSV files
         if file_paths:
             # Create the CSV agent
-            csv_agent=create_csv_agent(OpenAI(openai_api_key=openai_api_key, temperature=0.0),
-                                        file_paths,  verbose=True, memory=csv_memory)
-           
+            csv_agent = create_csv_agent(OpenAI(openai_api_key=openai_api_key, temperature=0.0),
+                                         file_paths, verbose=True)
 
             # Get the response from the agent
             user_question = prompt
-            print(user_question)
+
+            # Save the prompt
+            message = Message(content=prompt, agent_response=False,
+                               room=room, created_on=timezone.now())
+            message.save()
 
             if user_question:
-                print("user question: ", user_question)
                 response = csv_agent.run(user_question)
-                print(response)
 
-            # Return the response as JSON
-            return JsonResponse({'response': response})
+                # Save the response in the Message model
+                if response:
+                    room = Room.objects.get(room_id=room_id) 
+                    message = Message(content=response,
+                                        agent_response=True, room=room, created_on=timezone.now())
+                    message.save()
+
+                    return JsonResponse({'response': response})
 
         # Return a default response if no CSV files are found
         return JsonResponse({'response': 'No CSV files found.'})
@@ -432,16 +515,105 @@ def chat_with_csv(request):
     except Exception as e:
         error_message = f"Error processing request: {str(e)}"
         print(error_message)
-        return JsonResponse({'response': error_message}, status=500)
+        return JsonResponse({'response': 'Request not completed, try again.'}, status=500)
+    
+    
+from django.core.exceptions import ValidationError
+
+# Room List API
+@csrf_exempt
+def room_list(request):
+    try:
+        # Get the user_id and company_name from the URL parameters
+        user_id = request.GET.get('user_id')
+        company_name = request.GET.get('company_name')
+
+        # Get the UserSignup object based on the user_id parameter from the URL
+        user = get_object_or_404(UserSignup, user_id=user_id)
+
+        # Get the Company object based on the company_name parameter from the URL
+        company = get_object_or_404(Company, company_name=company_name, created_by=user)
+
+        # Get the Company ID
+        company_id = company.company_id
+
+        # Get the rooms for the specified company
+        rooms = Room.objects.filter(company__company_id=company_id)
+
+        # Extract the room names from the rooms queryset
+        room_names = [room.room_name for room in rooms]
+
+        # Return the room names as JSON response
+        return JsonResponse({'room_names': room_names})
+
+    except ValidationError as e:
+        return JsonResponse({'error': 'Validation Error', 'message': str(e)}, status=400)
+
+    except UserSignup.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+
+    except Company.DoesNotExist:
+        return JsonResponse({'error': 'Company not found'}, status=404)
+
+    except Exception as e:
+        return JsonResponse({'error': 'Internal Server Error', 'message': str(e)}, status=500)
 
 
+# Display messages when a room is opened in frontend
+@csrf_exempt
+def room_messages(request):
+    try:
+        # Get the user_id and company_name from the POST parameters
+        user_id = request.GET.get('user_id')
+        company_name = request.GET.get('company_name')
+
+        # Get the UserSignup object based on the user_id parameter from the POST data
+        user = get_object_or_404(UserSignup, user_id=user_id)
+
+        # Get the Company object based on the company_name parameter from the POST data
+        company = get_object_or_404(Company, company_name=company_name, created_by=user)
+
+        # Get the Company ID
+        company_id = company.company_id
+
+        # Get all rooms for the specified company
+        rooms = Room.objects.filter(company__company_id=company_id)
+
+        # Initialize an empty dictionary to store messages for each room
+        room_messages_dict = {}
+
+        # Loop through all rooms and retrieve messages for each room
+        for room in rooms:
+            messages = Message.objects.filter(room=room).order_by('-created_on')
+            message_data = [
+                {
+                    'message_id': message.message_id,
+                    'content': message.content,
+                    'agent_response': message.agent_response,
+                    'created_on': message.created_on
+                }
+                for message in messages
+            ]
+            room_messages_dict[room.room_id] = message_data
+
+        # Return the room messages as JSON response
+        return JsonResponse(room_messages_dict)
+
+    except UserSignup.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+
+    except Company.DoesNotExist:
+        return JsonResponse({'error': 'Company not found'}, status=404)
+
+    except Exception as e:
+        return JsonResponse({'error': 'Internal Server Error', 'message': str(e)}, status=500)
+    
 
 # Delete csv
 from django.core.files import File
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import os
-
 
 # Function to delete a CSV file
 def delete_csv_file(csv_file):

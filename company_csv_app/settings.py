@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-1^kwd*=6q1cls&!vwcr8!c52kf*8mv9o-*#(j)!xjqn_*+7ifv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['acelogic.pythonanywhere.com']
+ALLOWED_HOSTS = ['acelogic.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
@@ -79,15 +79,14 @@ WSGI_APPLICATION = 'company_csv_app.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Development Database Configs
-
 '''
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''s
 
 '''
 # Production Database Configs
@@ -101,7 +100,7 @@ DATABASES = {
         'PORT': 'portno',
     }
 }
-
+'''
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -195,13 +194,6 @@ CORS_ALLOW_METHODS = [
     'DELETE',
     'OPTIONS'
 ]
-
-
-
-# enable CORS logging
-
-CORS_REPLACE_HTTPS_REFERER = True
-CORS_REPLACE_HTTP_REFERER = True
 
 
 # Allow credentials (e.g., cookies) to be included in CORS requests.- Oprional

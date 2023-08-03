@@ -14,12 +14,12 @@ urlpatterns = [
     path('get-csv-names/', views.get_csv_names , name='get-csv-names'), #working
     path('chat/', views.chat_with_csv , name='chat-csv'), #working
     path('delete-files/', views.delete_csv_files , name='delete-csv'),
-
-
     path('update-api-key/', views.update_api_key, name='update-api-key'),# Working
     path('delete-api-key/', views.delete_api_key, name='delete-api-key'),
-
-    
+    path('inspect-csv-files/', views.inspect_user_csv, name='inspect-csv-files'),
+    path('create-room/', views.create_room, name='create-room'),
+    path('room_list/', views.room_list, name='room_list'),
+    path('room_messages/', views.room_messages, name='room_messages'),
 ]
     
 if settings.DEBUG:

@@ -64,14 +64,17 @@ class Company(models.Model):
         super().save(*args, **kwargs)
 
     def generate_company_id(self):
-        digits = ''.join(random.choices(string.digits, k=5))
+        numbers = ''.join(random.choices(string.digits, k=5))
         letters = ''.join(random.choices(string.ascii_letters, k=3))
-        return digits + letters
+        company_id_list = list(numbers + letters)
+        random.shuffle(company_id_list)
+        company_id = ''.join(company_id_list)
+        return company_id
 
     def __str__(self):
         return f"{self.company_name}: {self.active}"
     
-
+import os
 # CSv Model
 class CSVFile(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='csv_files', default='DEFAULT')
@@ -79,7 +82,8 @@ class CSVFile(models.Model):
     description = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.company.company_name} - {self.file.name}"
+        file_name = os.path.basename(self.file.name)
+        return f"{self.company.company_name} - {self.company.created_by} - {file_name}"
 
 
     
@@ -91,3 +95,54 @@ class ApiKey(models.Model):
     def __str__(self):
         return self.api_key
 
+
+
+# Rooms Model
+class Room(models.Model):
+    room_id = models.CharField(max_length=8, primary_key=True)
+    room_name = models.CharField(max_length=100)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.room_id:
+            self.room_id = self.generate_room_id()
+        super().save(*args, **kwargs)
+
+    def generate_room_id(self):
+        numbers = ''.join(random.choices(string.digits, k=5))
+        letters = ''.join(random.choices(string.ascii_letters, k=3))
+        room_id_list = list(numbers + letters)
+        random.shuffle(room_id_list)
+        room_id = ''.join(room_id_list)
+        return room_id
+
+    def __str__(self):
+        return self.room_name
+    
+   
+# Messages Model
+class Message(models.Model):
+    message_id = models.CharField(max_length=8, primary_key=True)
+    content = models.TextField()
+    agent_response = models.BooleanField(default=False)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.message_id:
+            self.message_id = self.generate_message_id()
+        super().save(*args, **kwargs)
+
+    def generate_message_id(self):
+        numbers = ''.join(random.choices(string.digits, k=5))
+        letters = ''.join(random.choices(string.ascii_letters, k=3))
+        message_id_list = list(numbers + letters)
+        random.shuffle(message_id_list)
+        message_id = ''.join(message_id_list)
+        return message_id
+
+    def __str__(self):
+        return f'{self.room} + {self.content[0:20]}'
+
+    
