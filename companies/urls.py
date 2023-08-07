@@ -20,6 +20,8 @@ urlpatterns = [
     path('create-room/', views.create_room, name='create-room'),
     path('room_list/', views.room_list, name='room_list'),
     path('room_messages/', views.room_messages, name='room_messages'),
+    path('room/rename/', views.rename_room, name='room_messages'),
+    path('room/delete/', views.delete_room, name='room_messages'),
 ]
     
 if settings.DEBUG:

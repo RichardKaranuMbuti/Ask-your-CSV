@@ -79,6 +79,7 @@ WSGI_APPLICATION = 'company_csv_app.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Development Database Configs
+
 '''
 DATABASES = {
     'default': {
@@ -86,7 +87,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-'''s
+'''
 
 '''
 # Production Database Configs
@@ -183,7 +184,7 @@ CORS_ALLOW_HEADERS = [
     'Origin',
     'Referer',
     'User-Agent',
-    # Add other headers here as needed
+    # Add other headers here
 ]
 
 CORS_ALLOW_METHODS = [

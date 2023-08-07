@@ -439,7 +439,30 @@ def create_room(request):
 
 load_dotenv()
 
+from langchain.prompts import PromptTemplate
+
+def create_room_name(prompt):
+    api_key_instance = ApiKey.objects.first()
+    if api_key_instance:
+        openai_api_key = api_key_instance.api_key
+    else:
+        return JsonResponse({'response': 'No API key found.'})
+    
+    llm= OpenAI(OpenAI(openai_api_key=openai_api_key, temperature=0.0))
+    # Create a templates
+    title_template= PromptTemplate(
+        input_variables=['topic'],
+        template='write me a short prompt title about {prompt}')
+    title_chain=llm(llm=llm, prompt=title_template, verbose=True,output_key='title')
+    if prompt:
+        title = title_chain.run(prompt)
+        print('AI gen title: ', title)
+    return title
+ 
+
 from django.utils import timezone
+from langchain.chat_models import ChatOpenAI
+from langchain.agents.agent_types import AgentType
 
 @csrf_exempt
 def chat_with_csv(request):
@@ -455,6 +478,7 @@ def chat_with_csv(request):
 
         # Extract prompt from request body
         prompt = request.POST.get('prompt')
+        
 
         # Save the prompt in the Message model
         if prompt:
@@ -480,9 +504,15 @@ def chat_with_csv(request):
             return JsonResponse({'response': 'No API key found.'})
 
         # Process CSV files
+        openai_api_key = openai_api_key
+        print("file_paths :",  file_paths)
+        print("Open ai key :",  openai_api_key)
+        
+
         if file_paths:
-            # Create the CSV agent
-            csv_agent = create_csv_agent(OpenAI(openai_api_key=openai_api_key, temperature=0.0),
+            # Create the CSV agent    
+            csv_agent = create_csv_agent(OpenAI(openai_api_key = openai_api_key,
+                                                 temperature=0),
                                          file_paths, verbose=True)
 
             # Get the response from the agent
@@ -519,6 +549,7 @@ def chat_with_csv(request):
     
     
 from django.core.exceptions import ValidationError
+
 
 # Room List API
 @csrf_exempt
@@ -559,13 +590,54 @@ def room_list(request):
         return JsonResponse({'error': 'Internal Server Error', 'message': str(e)}, status=500)
 
 
+
 # Display messages when a room is opened in frontend
 @csrf_exempt
 def room_messages(request):
     try:
-        # Get the user_id and company_name from the POST parameters
+        # Get the user_id and room_id from the GET parameters
+        user_id = request.GET.get('user_id')
+        room_id = request.GET.get('room_id')
+
+        # Check if the user_id exists in the UserSignup model
+        try:
+            user = UserSignup.objects.get(user_id=user_id)
+        except UserSignup.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
+
+        # Get the room associated with the user's company
+        try:
+            room = Room.objects.get(room_id=room_id, company__created_by=user)
+        except Room.DoesNotExist:
+            return JsonResponse({'error': 'Room not found'}, status=404)
+
+        # Retrieve messages for the room
+        messages = Message.objects.filter(room=room).order_by('-created_on')
+        message_data = [
+            {
+                'message_id': message.message_id,
+                'content': message.content,
+                'agent_response': message.agent_response,
+                'created_on': message.created_on
+            }
+            for message in messages
+        ]
+
+        # Return the room messages as JSON response
+        return JsonResponse({room.room_id: message_data})
+
+    except Exception as e:
+        return JsonResponse({'error': 'Internal Server Error', 'message': str(e)}, status=500)
+
+# Rename room API
+@csrf_exempt
+def rename_room(request):
+    try:
+        # Get the user_id, company_name, room_id, and new_room_name from the POST parameters
         user_id = request.GET.get('user_id')
         company_name = request.GET.get('company_name')
+        room_id = request.POST.get('room_id')
+        new_room_name = request.POST.get('new_room_name')
 
         # Get the UserSignup object based on the user_id parameter from the POST data
         user = get_object_or_404(UserSignup, user_id=user_id)
@@ -573,31 +645,18 @@ def room_messages(request):
         # Get the Company object based on the company_name parameter from the POST data
         company = get_object_or_404(Company, company_name=company_name, created_by=user)
 
-        # Get the Company ID
-        company_id = company.company_id
+        # Get the Room object to be renamed based on the room_id parameter from the POST data
+        room = get_object_or_404(Room, room_id=room_id, company=company)
 
-        # Get all rooms for the specified company
-        rooms = Room.objects.filter(company__company_id=company_id)
+        # Rename the room
+        room.room_name = new_room_name
+        room.save()
 
-        # Initialize an empty dictionary to store messages for each room
-        room_messages_dict = {}
+        # Return a success JSON response
+        return JsonResponse({'message': f'Room renamed successfully'})
 
-        # Loop through all rooms and retrieve messages for each room
-        for room in rooms:
-            messages = Message.objects.filter(room=room).order_by('-created_on')
-            message_data = [
-                {
-                    'message_id': message.message_id,
-                    'content': message.content,
-                    'agent_response': message.agent_response,
-                    'created_on': message.created_on
-                }
-                for message in messages
-            ]
-            room_messages_dict[room.room_id] = message_data
-
-        # Return the room messages as JSON response
-        return JsonResponse(room_messages_dict)
+    except ValidationError as e:
+        return JsonResponse({'error': 'Validation Error', 'message': str(e)}, status=400)
 
     except UserSignup.DoesNotExist:
         return JsonResponse({'error': 'User not found'}, status=404)
@@ -605,9 +664,53 @@ def room_messages(request):
     except Company.DoesNotExist:
         return JsonResponse({'error': 'Company not found'}, status=404)
 
+    except Room.DoesNotExist:
+        return JsonResponse({'error': 'Room not found'}, status=404)
+
     except Exception as e:
         return JsonResponse({'error': 'Internal Server Error', 'message': str(e)}, status=500)
-    
+
+# Delete Room API
+
+@csrf_exempt
+def delete_room(request):
+    try:
+        # Get the user_id, company_name, and room_id from the POST parameters
+        user_id = request.GET.get('user_id')
+        company_name = request.GET.get('company_name')
+        room_id = request.GET.get('room_id')
+
+        # Get the UserSignup object based on the user_id parameter from the POST data
+        user = get_object_or_404(UserSignup, user_id=user_id)
+
+        # Get the Company object based on the company_name parameter from the POST data
+        company = get_object_or_404(Company, company_name=company_name, created_by=user)
+
+        # Get the Room object to be deleted based on the room_id parameter from the POST data
+        room = get_object_or_404(Room, room_id=room_id, company=company)
+
+        # Delete the room
+        room.delete()
+
+        # Return a success JSON response
+        return JsonResponse({'message': f'Room {room.room_name} deleted successfully'})
+
+    except ValidationError as e:
+        return JsonResponse({'error': 'Validation Error', 'message': str(e)}, status=400)
+
+    except UserSignup.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+
+    except Company.DoesNotExist:
+        return JsonResponse({'error': 'Company not found'}, status=404)
+
+    except Room.DoesNotExist:
+        return JsonResponse({'error': 'Room not found'}, status=404)
+
+    except Exception as e:
+        return JsonResponse({'error': 'Internal Server Error', 'message': str(e)}, status=500)
+
+
 
 # Delete csv
 from django.core.files import File
@@ -698,7 +801,6 @@ def delete_csv_files(request):
         error_message = f"Error deleting CSV files: {str(e)}"
         print(error_message)
         return JsonResponse({'message': error_message}, status=500)
-
 
 
 # Save and update API key
