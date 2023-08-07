@@ -4,4 +4,4 @@ description.txt
 media/
 api_test.py
 db.sqlite3
-
+.history
