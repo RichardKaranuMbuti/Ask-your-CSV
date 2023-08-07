@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-1^kwd*=6q1cls&!vwcr8!c52kf*8mv9o-*#(j)!xjqn_*+7ifv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['acelogic.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['acelogic.pythonanywhere.com', '127.0.0.1', 'miksi.pythonanywhere.com']
 
 
 # Application definition
@@ -89,19 +89,20 @@ DATABASES = {
 }
 '''
 
-'''
 # Production Database Configs
+from dbsettings import ENGINE, NAME, USER, PASSWORD, HOST, PORT
+
 DATABASES = {
     'default': {
-        'ENGINE': 'engine',
-        'NAME': 'Acelogic$name',
-        'USER': 'Acelogic',
-        'PASSWORD': 'Password',
-        'HOST': 'host',
-        'PORT': 'portno',
+        'ENGINE': ENGINE,
+        'NAME': NAME,
+        'USER': USER,
+        'PASSWORD': PASSWORD,
+        'HOST': HOST,
+        'PORT': PORT,
     }
 }
-'''
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
