@@ -174,7 +174,7 @@ CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
      # Add your frontend URL here
-    # 'http://127.0.0.1:5500',
+    #'http://127.0.0.1:5500',
     #'http://127.0.0.1',
     # Add more allowed origins as needed
     'https://miksi.io',

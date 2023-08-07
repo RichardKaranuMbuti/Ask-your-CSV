@@ -20,9 +20,6 @@ urlpatterns = [
     path('create-room/', views.create_room, name='create-room'),
     path('room_list/', views.room_list, name='room_list'),
     path('room_messages/', views.room_messages, name='room_messages'),
-
-     path('auth/google/login/', views.GoogleLogin.as_view(), name='google_login'),
-     path("~redirect/", view=views.UserRedirectView.as_view(), name="redirect")
 ]
     
 if settings.DEBUG:

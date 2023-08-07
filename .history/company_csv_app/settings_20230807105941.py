@@ -80,13 +80,11 @@ TEMPLATES = [
         },
     },
 ]
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     )
 }
-
 WSGI_APPLICATION = 'company_csv_app.wsgi.application'
 
 
@@ -174,7 +172,7 @@ CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
      # Add your frontend URL here
-    # 'http://127.0.0.1:5500',
+    #'http://127.0.0.1:5500',
     #'http://127.0.0.1',
     # Add more allowed origins as needed
     'https://miksi.io',
@@ -214,6 +212,5 @@ CORS_ALLOW_METHODS = [
 # Allow credentials (e.g., cookies) to be included in CORS requests.- Oprional
 CORS_ALLOW_CREDENTIALS = True
 
-SITE_ID = 2
-ACCOUNT_EMAIL_VERIFICATION = "none"
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+

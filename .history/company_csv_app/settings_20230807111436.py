@@ -94,14 +94,14 @@ WSGI_APPLICATION = 'company_csv_app.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Development Database Configs
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-'''
+
 
 '''
 # Production Database Configs
@@ -174,7 +174,7 @@ CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
      # Add your frontend URL here
-    # 'http://127.0.0.1:5500',
+    'http://127.0.0.1:8080',
     #'http://127.0.0.1',
     # Add more allowed origins as needed
     'https://miksi.io',
