@@ -140,7 +140,11 @@ def create_company(request):
 
         message = f"Company {company.company_name} created successfully!"
 
+<<<<<<< HEAD
         return Response({'message': message, 'status' : 'success'})
+=======
+        return Response({'message': message, 'status' : 'Success'})
+>>>>>>> a6b94e1f3a66c3ed94e1e9413a85691c75fcf7cf
     except UserSignup.DoesNotExist:
         return Response({'message': 'User not found.'}, status=404)
     except Exception as e:
@@ -463,6 +467,7 @@ def create_room_name(prompt):
 from django.utils import timezone
 from langchain.chat_models import ChatOpenAI
 from langchain.agents.agent_types import AgentType
+from urllib.parse import unquote
 
 @csrf_exempt
 def chat_with_csv(request):
@@ -476,16 +481,25 @@ def chat_with_csv(request):
         user_id = request.GET.get('user_id')
         company_name = request.GET.get('company_name')  # Use GET instead of POST
 
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> a6b94e1f3a66c3ed94e1e9413a85691c75fcf7cf
 
         # Extract prompt from request body
         raw_prompt = request.POST.get('prompt')
 
         # URL decode the input if necessary
         prompt = unquote(raw_prompt)
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> a6b94e1f3a66c3ed94e1e9413a85691c75fcf7cf
 
+        
+    
         # Save the prompt in the Message model
         if prompt:
             print("prompt:", prompt)
@@ -553,8 +567,12 @@ def chat_with_csv(request):
         print(error_message)
         return JsonResponse({'response': 'Request not completed, try again.'}, status=500)
 
+<<<<<<< HEAD
 
 
+=======
+    
+>>>>>>> a6b94e1f3a66c3ed94e1e9413a85691c75fcf7cf
 from django.core.exceptions import ValidationError
 
 
