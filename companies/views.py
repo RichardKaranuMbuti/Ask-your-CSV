@@ -463,8 +463,8 @@ def create_room_name(prompt):
 from django.utils import timezone
 from langchain.chat_models import ChatOpenAI
 from langchain.agents.agent_types import AgentType
-from urllib.parse import unquote
 
+# chat with csv
 @csrf_exempt
 def chat_with_csv(request):
     try:
