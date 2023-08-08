@@ -48,7 +48,7 @@ def save_user_id(request):
             return JsonResponse({'message': error_message}, status=500)
     else:
         return JsonResponse({'message': 'Invalid request method.'}, status=400)
-''' 
+'''
 
 # Signup view
 @csrf_exempt
@@ -99,7 +99,7 @@ def login_view(request):
             user = UserSignup.objects.get(email=email)
             if user.password == password:
                 # Correct login details
-                url = "/users/" 
+                url = "/users/"
                 user_id = user.user_id
                 return JsonResponse({'url': url, 'user_id': user_id})
             else:
@@ -141,6 +141,7 @@ def create_company(request):
         message = f"Company {company.company_name} created successfully!"
 
         return Response({'message': message, 'status' : 'Success'})
+
     except UserSignup.DoesNotExist:
         return Response({'message': 'User not found.'}, status=404)
     except Exception as e:
@@ -291,7 +292,7 @@ def get_csv_files(request):
 
 
         #return JsonResponse({'file_paths': file_paths})
-        
+
 
     except UserSignup.DoesNotExist:
         return JsonResponse({'message': 'User not found.'}, status=404)
@@ -447,7 +448,7 @@ def create_room_name(prompt):
         openai_api_key = api_key_instance.api_key
     else:
         return JsonResponse({'response': 'No API key found.'})
-    
+
     llm= OpenAI(OpenAI(openai_api_key=openai_api_key, temperature=0.0))
     # Create a templates
     title_template= PromptTemplate(
@@ -458,7 +459,7 @@ def create_room_name(prompt):
         title = title_chain.run(prompt)
         print('AI gen title: ', title)
     return title
- 
+
 
 from django.utils import timezone
 from langchain.chat_models import ChatOpenAI
@@ -475,24 +476,17 @@ def chat_with_csv(request):
 
         # Extract user_id and company_name from URL query parameters
         user_id = request.GET.get('user_id')
-        company_name = request.GET.get('company_name')  # Use GET instead of POST
-
-    
+        company_name = request.GET.get('company_name')  
 
         # Extract prompt from request body
-        raw_prompt = request.POST.get('prompt')
+        prompt = request.POST.get('prompt')
 
-        # URL decode the input if necessary
-        prompt = unquote(raw_prompt)
-
-        
-    
         # Save the prompt in the Message model
         if prompt:
             print("prompt:", prompt)
-            room = Room.objects.get(room_id=room_id) 
+            room = Room.objects.get(room_id=room_id)
             print(" first room:", room)
-        
+
         # Find the user
         user = UserSignup.objects.get(user_id=user_id)
 
@@ -514,10 +508,10 @@ def chat_with_csv(request):
         openai_api_key = openai_api_key
         print("file_paths :",  file_paths)
         print("Open ai key :",  openai_api_key)
-        
+
 
         if file_paths:
-            # Create the CSV agent    
+            # Create the CSV agent
             csv_agent = create_csv_agent(OpenAI(openai_api_key = openai_api_key,
                                                  temperature=0),
                                          file_paths, verbose=True)
@@ -535,7 +529,7 @@ def chat_with_csv(request):
 
                 # Save the response in the Message model
                 if response:
-                    room = Room.objects.get(room_id=room_id) 
+                    room = Room.objects.get(room_id=room_id)
                     message = Message(content=response,
                                         agent_response=True, room=room, created_on=timezone.now())
                     message.save()
@@ -554,7 +548,7 @@ def chat_with_csv(request):
         print(error_message)
         return JsonResponse({'response': 'Request not completed, try again.'}, status=500)
 
-    
+
 from django.core.exceptions import ValidationError
 
 
@@ -833,7 +827,7 @@ def update_api_key(request):
 
     return JsonResponse({'message': 'Invalid request method.'})
 
-# Delete api key api 
+# Delete api key api
 def delete_api_key(request):
     if request.method == 'POST':
         api_key_value = request.POST.get('api_key')
