@@ -746,16 +746,40 @@ def delete_api_key(request):
 
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from allauth.socialaccount.models import SocialAccount
 from dj_rest_auth.registration.views import SocialLoginView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import RedirectView
+from rest_framework import status
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
     callback_url = "https://makina-d6193.firebaseapp.com/__/auth/handler"
     client_class = OAuth2Client
 
+    def get_response(self):
+        serializer_class = self.get_response_serializer()
+        user = self.user
+        user_extra_data = SocialAccount.objects.filter(user=self.request.user).first().extra_data
+        name = user_extra_data["name"]
+        print(user_extra_data)
+
+                # Create a new UserSignup object
+        user_signup = UserSignup(
+            first_name=user_extra_data['given_name'],
+            last_name=user_extra_data['family_name'],
+            email=user_extra_data['email'],
+            # password=password,
+            # confirm_password=confirm_password,
+        )
+
+        # Save the UserSignup object to the database
+        user_signup.save()
+  
+        response = Response(name, status = status.HTTP_200_OK)
+        return response
+     
 class UserRedirectView(LoginRequiredMixin, RedirectView):
     """
     This view is needed by the dj-rest-auth-library in order to work the google login. It's a bug.
