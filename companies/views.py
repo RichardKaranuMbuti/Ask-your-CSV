@@ -476,7 +476,7 @@ def chat_with_csv(request):
 
         # Extract user_id and company_name from URL query parameters
         user_id = request.GET.get('user_id')
-        company_name = request.GET.get('company_name')  
+        company_name = request.GET.get('company_name')
 
         # Extract prompt from request body
         prompt = request.POST.get('prompt')
@@ -543,10 +543,10 @@ def chat_with_csv(request):
         return JsonResponse({'response': 'User not found.'}, status=404)
     except Company.DoesNotExist:
         return JsonResponse({'response': 'Company not found.'}, status=404)
-    except Exception as e:
-        error_message = f"Error processing request: {str(e)}"
-        print(error_message)
-        return JsonResponse({'response': 'Request not completed, try again.'}, status=500)
+#    except Exception as e:
+#        error_message = f"Error processing request: {str(e)}"
+#        print(error_message)
+#        return JsonResponse({'response': 'Request not completed, try again.'}, status=500)
 
 
 from django.core.exceptions import ValidationError
