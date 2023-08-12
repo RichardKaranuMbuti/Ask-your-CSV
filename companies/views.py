@@ -468,40 +468,6 @@ from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain, SimpleSequentialChain
 from langchain.chat_models import ChatOpenAI
-
-
-
-
-# Custom Prompts
-
-def prompt_chains(prompt):
-    title_template = PromptTemplate( 
-        input_variables=["prompt"],
-        template='''From the dictionary given  which indicates the name of a csv files and for each and corresponding 
-        names of columns, in simple_words that are clear explain what dataset we should use to answer the prompt : 
-        {prompt}, where you are sure also specify the columns.
-        .  :'''
-    )
-    script_template = PromptTemplate( 
-        input_variables=["simple_words"],
-        template=''' Now from the above simple_words: , {simple_words} construct a prompt that will help answer my prompt.
-        use the same tone as my prompt. Where thre are no specific objectives you need to decide what to do. If the question
-        is too general, example generate summaries or something like that, decide what to focus on so as to answer the prompt
-          '''
-    )
-
-
-#    llm = OpenAI( modelName = "gpt-4",temperature=0.9)
-    llm = ChatOpenAI(model='gpt-4',temperature=0)
-
-    title_chain = LLMChain(llm=llm, prompt=title_template, verbose=True)
-    script_chain = LLMChain(llm=llm, prompt=script_template, verbose=True)
-
-    sequential_chain = SimpleSequentialChain(chains=[title_chain, script_chain], verbose=True)
-    response = sequential_chain.run(prompt)
-    #print("pre response prompt: ", response)
-    return response
-
 from django.utils import timezone
 from langchain.chat_models import ChatOpenAI
 from langchain.agents.agent_types import AgentType
@@ -540,11 +506,14 @@ def chat_with_csv(request):
         file_info=inspect_user_csv(file_paths)
         print("file_info:", file_info)
 
-        formatted_file_info = "Use this file info: {}".format(file_info)
-        prompt = prompt + " " + formatted_file_info
+        formatted_file_info = "Use this additional file info: {}".format(file_info)
+        prompt2 = prompt 
         print("Modified Prompt: ", prompt)
 
-        response = prompt_chains(prompt)
+        
+
+        prompt2 = prompt + f'csv files info {formatted_file_info}'
+        print(f'joking :{formatted_file_info}')
 
         # Load the OpenAI API key from the apikey model
         api_key_instance = ApiKey.objects.first()
@@ -563,12 +532,12 @@ def chat_with_csv(request):
         if file_paths:
             # Create the CSV agent
             #ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.9)
-            csv_agent = create_csv_agent(ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.9),
+            csv_agent = create_csv_agent(ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.8),
                                          file_paths, verbose=True)
 
             # Get the response from the agent
             #user_question = response + prompt
-            user_question = response
+            user_question = prompt2
             print("User question :", user_question)
 
 
@@ -583,7 +552,7 @@ def chat_with_csv(request):
                 # Save the response in the Message model
                 if response:
                     room = Room.objects.get(room_id=room_id)
-                    message = Message(content=response,
+                    message = Message(content=prompt2,
                                         agent_response=True, room=room, created_on=timezone.now())
                     message.save()
 
