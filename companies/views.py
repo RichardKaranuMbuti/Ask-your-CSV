@@ -487,6 +487,7 @@ def chat_with_csv(request):
 
         # Extract prompt from request body
         prompt = request.POST.get('prompt')
+        print("prompt: ", prompt)
 
         # Save the prompt in the Message model
         if prompt:
@@ -504,7 +505,7 @@ def chat_with_csv(request):
         file_paths = [csv_file.file.path for csv_file in csv_files]
 
         file_info=inspect_user_csv(file_paths)
-        print("file_info:", file_info)
+        #print("file_info:", file_info)
 
         formatted_file_info = "Use this additional file info: {}".format(file_info)
         prompt2 = prompt 
@@ -552,7 +553,7 @@ def chat_with_csv(request):
                 # Save the response in the Message model
                 if response:
                     room = Room.objects.get(room_id=room_id)
-                    message = Message(content=prompt2,
+                    message = Message(content=response,
                                         agent_response=True, room=room, created_on=timezone.now())
                     message.save()
 
@@ -565,6 +566,8 @@ def chat_with_csv(request):
         return JsonResponse({'response': 'User not found.'}, status=404)
     except Company.DoesNotExist:
         return JsonResponse({'response': 'Company not found.'}, status=404)
+    except Room.DoesNotExist:
+        return JsonResponse({'response': 'Room not found.'}, status=404)
 #    except Exception as e:
 #        error_message = f"Error processing request: {str(e)}"
 #        print(error_message)
