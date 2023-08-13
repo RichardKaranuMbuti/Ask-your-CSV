@@ -461,6 +461,13 @@ def create_room_name(prompt):
     return title
 
 
+
+from .apikey import apikey
+os.environ['OPENAI_API_KEY'] = apikey
+from langchain.llms import OpenAI
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain, SimpleSequentialChain
+from langchain.chat_models import ChatOpenAI
 from django.utils import timezone
 from langchain.chat_models import ChatOpenAI
 from langchain.agents.agent_types import AgentType
@@ -483,9 +490,9 @@ def chat_with_csv(request):
 
         # Save the prompt in the Message model
         if prompt:
-            print("prompt:", prompt)
+            #print("prompt:", prompt)
             room = Room.objects.get(room_id=room_id)
-            print(" first room:", room)
+            #print(" first room:", room)
 
         # Find the user
         user = UserSignup.objects.get(user_id=user_id)
@@ -495,6 +502,18 @@ def chat_with_csv(request):
 
         csv_files = company.csv_files.all()
         file_paths = [csv_file.file.path for csv_file in csv_files]
+
+        file_info=inspect_user_csv(file_paths)
+        print("file_info:", file_info)
+
+        formatted_file_info = "Use this additional file info: {}".format(file_info)
+        prompt2 = prompt
+        print("Modified Prompt: ", prompt)
+
+
+
+        prompt2 = prompt + f'csv files info {formatted_file_info}'
+        print(f'joking :{formatted_file_info}')
 
         # Load the OpenAI API key from the apikey model
         api_key_instance = ApiKey.objects.first()
@@ -512,12 +531,15 @@ def chat_with_csv(request):
 
         if file_paths:
             # Create the CSV agent
-            csv_agent = create_csv_agent(OpenAI(openai_api_key = openai_api_key,
-                                                 temperature=0),
+            #ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.9)
+            csv_agent = create_csv_agent(ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.8),
                                          file_paths, verbose=True)
 
             # Get the response from the agent
-            user_question = prompt
+            #user_question = response + prompt
+            user_question = prompt2
+            print("User question :", user_question)
+
 
             # Save the prompt
             message = Message(content=prompt, agent_response=False,
@@ -530,7 +552,7 @@ def chat_with_csv(request):
                 # Save the response in the Message model
                 if response:
                     room = Room.objects.get(room_id=room_id)
-                    message = Message(content=response,
+                    message = Message(content=prompt2,
                                         agent_response=True, room=room, created_on=timezone.now())
                     message.save()
 
@@ -625,7 +647,7 @@ def room_messages(request):
         ]
 
         # Return the room messages as JSON response
-        return JsonResponse({room.room_id: message_data})
+        return JsonResponse({'Messages': message_data})
 
     except Exception as e:
         return JsonResponse({'error': 'Internal Server Error', 'message': str(e)}, status=500)
