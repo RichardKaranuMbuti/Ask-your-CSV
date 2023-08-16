@@ -486,7 +486,7 @@ def chat_with_csv(request):
 
         # Extract user_id and company_name from URL query parameters
         user_id = request.GET.get('user_id')
-        company_name = request.GET.get('company_name')  
+        company_name = request.GET.get('company_name')
 
         # Extract prompt from request body
         prompt = request.POST.get('prompt')
@@ -511,9 +511,13 @@ def chat_with_csv(request):
         #print("file_info:", file_info)
 
         formatted_file_info = "Use this additional file info: {}".format(file_info)
-        prompt2 = prompt
+        prompt2 = prompt 
         
-        prompt2 = prompt + f'csv files info {formatted_file_info} and if the prompt is in Slovenian answer in Slovenian.'
+
+        
+
+        prompt2 = prompt + f'csv files info {formatted_file_info}'
+        print(f'joking :{formatted_file_info}')
 
         # Load the OpenAI API key from the apikey model
         api_key_instance = ApiKey.objects.first()
@@ -532,8 +536,8 @@ def chat_with_csv(request):
         if file_paths:
             
             # Create the CSV agent
-            csv_agent = create_csv_agent(ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',
-                                                    temperature=0.8),
+            #ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.9)
+            csv_agent = create_csv_agent(ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.8),
                                          file_paths, verbose=True)
 
             # Get the response from the agent
