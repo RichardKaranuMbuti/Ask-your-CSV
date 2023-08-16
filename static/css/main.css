@@ -1,0 +1,46 @@
+/* Add these styles to your main.css file */
+/* Adjust the chat input section position and margin */
+.chat-input-section {
+    position: fixed;
+    bottom: 20px; /* Adjust the margin as needed */
+    width: calc(100% - 280px); /* Adjust the width to account for sidebar width */
+    z-index: 1000; /* Ensure the input section is above other content */
+    background-color: white;
+    border-top: 1px solid #ccc;
+    padding: 10px 20px;
+}
+
+/* Remove the default bottom margin from the main content */
+main {
+    margin-bottom: 0;
+    background-color: hsl(268, 84%, 15%);
+}
+
+.chat-area {
+    background-color: hsl(268, 84%, 15%);
+}
+
+
+.chat-messages-box {
+    background-color: #f4f4f4; /* Background color for chat messages box */
+    border: 1px solid #ddd; /* Border for chat messages box */
+    padding: 10px;
+    overflow-y: auto; /* Enable scrolling for overflow */
+    max-height: calc(100vh - 200px); /* Adjust max-height to leave space for other elements */
+}
+
+/* Styling for chat messages */
+.message-container {
+    margin-bottom: 10px;
+}
+
+.message-content {
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 70%; /* Maximum width of message content */
+}
+
+.agent-response {
+    background-color: #efffe6; /* Background color for agent responses */
+    margin-left: 30px; /* Margin for agent responses */
+}

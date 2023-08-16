@@ -400,6 +400,10 @@ def chat(request):
 
 '''
 
+def mainhome(request):
+    if request.method == 'GET':
+        return render(request, 'companies/main.html')
+
 from django.shortcuts import get_object_or_404
 
 @csrf_exempt
@@ -469,8 +473,7 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain, SimpleSequentialChain
 from langchain.chat_models import ChatOpenAI
 from django.utils import timezone
-from langchain.chat_models import ChatOpenAI
-from langchain.agents.agent_types import AgentType
+import openai
 
 # chat with csv
 @csrf_exempt
@@ -508,13 +511,9 @@ def chat_with_csv(request):
         #print("file_info:", file_info)
 
         formatted_file_info = "Use this additional file info: {}".format(file_info)
-        prompt2 = prompt 
-        print("Modified Prompt: ", prompt)
-
+        prompt2 = prompt
         
-
-        prompt2 = prompt + f'csv files info {formatted_file_info}'
-        print(f'joking :{formatted_file_info}')
+        prompt2 = prompt + f'csv files info {formatted_file_info} and if the prompt is in Slovenian answer in Slovenian.'
 
         # Load the OpenAI API key from the apikey model
         api_key_instance = ApiKey.objects.first()
@@ -531,15 +530,16 @@ def chat_with_csv(request):
 
 
         if file_paths:
+            
             # Create the CSV agent
-            #ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.9)
-            csv_agent = create_csv_agent(ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.8),
+            csv_agent = create_csv_agent(ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',
+                                                    temperature=0.8),
                                          file_paths, verbose=True)
 
             # Get the response from the agent
             #user_question = response + prompt
             user_question = prompt2
-            print("User question :", user_question)
+            #print("User question :", user_question)
 
 
             # Save the prompt
@@ -548,16 +548,29 @@ def chat_with_csv(request):
             message.save()
 
             if user_question:
-                response = csv_agent.run(user_question)
+                response1 = csv_agent.run(user_question)
+                openai.api_key = openai_api_key
+                prompt=f"translate the textto the language the prompt  was written in: "
+
+                response = openai.ChatCompletion.create(
+                    model="gpt-4",
+                    messages= [{"role": "system", "content": prompt + response1}, {"role": "user", "content": response1}],
+                    temperature=0,
+                    max_tokens=256
+                )
+                message = response["choices"][0]["message"]
+                response = message["content"]
+                print("response:", response)
+                
 
                 # Save the response in the Message model
                 if response:
                     room = Room.objects.get(room_id=room_id)
-                    message = Message(content=response,
+                    message = Message(content=response1,
                                         agent_response=True, room=room, created_on=timezone.now())
                     message.save()
 
-                    return JsonResponse({'response': response})
+                    return JsonResponse({'response': response1})
 
         # Return a default response if no CSV files are found
         return JsonResponse({'response': 'No CSV files found.'})
