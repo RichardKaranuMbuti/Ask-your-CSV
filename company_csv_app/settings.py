@@ -89,7 +89,6 @@ DATABASES = {
 }
 '''
 
-
 # Production Database Configs
 from dbsettings import ENGINE, NAME, USER, PASSWORD, HOST, PORT
 

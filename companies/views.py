@@ -529,10 +529,7 @@ def chat_with_csv(request):
 
         # Process CSV files
         openai_api_key = openai_api_key
-        print("file_paths :",  file_paths)
-        print("Open ai key :",  openai_api_key)
-
-
+        
         if file_paths:
             
             # Create the CSV agent
@@ -554,11 +551,11 @@ def chat_with_csv(request):
             if user_question:
                 response1 = csv_agent.run(user_question)
                 openai.api_key = openai_api_key
-                prompt=f"translate the textto the language the prompt  was written in: "
+                prompt1=f"translate this text: {response1} to the language the prompt: {prompt}  was written in. If the text is already in the same language do nothing just output the text "
 
                 response = openai.ChatCompletion.create(
                     model="gpt-4",
-                    messages= [{"role": "system", "content": prompt + response1}, {"role": "user", "content": response1}],
+                    messages= [{"role": "system", "content": prompt1 }, {"role": "user", "content": response1}],
                     temperature=0,
                     max_tokens=256
                 )
@@ -574,7 +571,7 @@ def chat_with_csv(request):
                                         agent_response=True, room=room, created_on=timezone.now())
                     message.save()
 
-                    return JsonResponse({'response': response1})
+                    return JsonResponse({'response': response})
 
         # Return a default response if no CSV files are found
         return JsonResponse({'response': 'No CSV files found.'})
