@@ -506,6 +506,7 @@ def chat_with_csv(request):
 
         csv_files = company.csv_files.all()
         file_paths = [csv_file.file.path for csv_file in csv_files]
+        print("file paths: ", file_paths)
 
         file_info=inspect_user_csv(file_paths)
         #print("file_info:", file_info)
@@ -516,8 +517,9 @@ def chat_with_csv(request):
 
         
 
-        prompt2 = prompt + f'csv files info {formatted_file_info}'
-        print(f'joking :{formatted_file_info}')
+        prompt2 = prompt + f'csv files column names: {formatted_file_info}'
+        #print(f'joking :{formatted_file_info}')
+       
 
         # Load the OpenAI API key from the apikey model
         api_key_instance = ApiKey.objects.first()
