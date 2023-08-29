@@ -2,6 +2,10 @@ from django.urls import path,re_path
 from . import views
 from django.conf import settings
 
+# Password reset
+from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
+
+
 urlpatterns = [
     path('signup/', views.signup_view, name='signup'),
     #path('save/user/', views.save_user_id, name='save-user-id'),
@@ -21,8 +25,13 @@ urlpatterns = [
     path('room_list/', views.room_list, name='room_list'),
     path('room_messages/', views.room_messages, name='room_messages'),
 
-     path('auth/google/login/', views.GoogleLogin.as_view(), name='google_login'),
-     path("~redirect/", view=views.UserRedirectView.as_view(), name="redirect")
+    path('auth/google/login/', views.GoogleLogin.as_view(), name='google_login'),
+    path("~redirect/", view=views.UserRedirectView.as_view(), name="redirect"),
+
+    path('auth/password/reset/',PasswordResetView.as_view(),name='rest_password_reset'),
+    path('auth/password/reset/confirm/<uidb64>/<token>/',
+         PasswordResetConfirmView.as_view(), 
+         name='password_reset_confirm'),
 ]
     
 if settings.DEBUG:
