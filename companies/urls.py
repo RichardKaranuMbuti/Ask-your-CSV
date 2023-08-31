@@ -28,10 +28,8 @@ urlpatterns = [
     path('auth/google/login/', views.GoogleLogin.as_view(), name='google_login'),
     path("~redirect/", view=views.UserRedirectView.as_view(), name="redirect"),
 
-    path('auth/password/reset/',PasswordResetView.as_view(),name='rest_password_reset'),
-    path('auth/password/reset/confirm/<uidb64>/<token>/',
-         PasswordResetConfirmView.as_view(), 
-         name='password_reset_confirm'),
+    path('password/reset/',views.password_recovery_view, name='rest_password_reset'),
+    path('password/reset/confirm/', views.reset_confirm_view, name='password_reset_confirm'),
 ]
     
 if settings.DEBUG:

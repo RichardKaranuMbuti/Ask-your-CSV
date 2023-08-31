@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
-from .models import Company, CSVFile, ApiKey , UserSignup, Room, Message
+from .models import Company, CSVFile, ApiKey , UserSignup, Room, Message, PasswordRecovery
 from .serializers import CSVFileSerializer
 from django.http import HttpResponse
 from dotenv import load_dotenv
@@ -19,8 +19,9 @@ from django.http import HttpResponseServerError
 from django.conf import settings
 import json
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import EmailMessage, get_connection
 import uuid
-
+import numpy as np
 '''
 @csrf_exempt
 def save_user_id(request):
@@ -111,7 +112,70 @@ def login_view(request):
 
     return JsonResponse({'error': 'Invalid Request'})
 
+# Handle password-recovery
+@csrf_exempt
+@api_view(['GET', 'POST'])
+def password_recovery_view(request):
+    if request.method == 'POST':
+        email = request.data['email']
+        print(email)
 
+        try:
+            user = UserSignup.objects.get(email=email)
+        except UserSignup.DoesNotExist:
+            return JsonResponse({'error': 'email not found'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if user:
+            code = np.random.randint(0, 999999)
+            try:
+                with get_connection(  
+                    host = settings.EMAIL_HOST, 
+                    port = settings.EMAIL_PORT,  
+                    username = settings.EMAIL_HOST_USER, 
+                    password = settings.EMAIL_HOST_PASSWORD, 
+                    use_tls = settings.EMAIL_USE_TLS  
+                    ) as connection:  
+                    subject = "Reset your password" 
+                    email_from = settings.EMAIL_HOST_USER  
+                    recipient_list = [email, ]  
+                    message = "Use this code: {} to reset your password".format(code)
+                    EmailMessage(subject, message, email_from, recipient_list, connection=connection).send()  
+                    
+                    password_recovery = PasswordRecovery(email=email,code = code,)
+                    password_recovery.save()
+
+                return JsonResponse({'message':"successful"}, status=status.HTTP_200_OK) 
+            except:
+                return JsonResponse({'error': 'unable to send email'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            JsonResponse({'error':"email not found"},status=status.HTTP_400_BAD_REQUEST) 
+    
+    return JsonResponse({'error': 'Invalid Request'},status=status.HTTP_400_BAD_REQUEST)
+
+# Handle password-recovery
+@csrf_exempt
+@api_view(['GET', 'POST'])
+def reset_confirm_view(request):
+    if request.method == 'POST':
+        new_password1 = request.data['new_password1']
+        new_password2 = request.data['new_password2']
+        code = request.data['code']
+
+        email = PasswordRecovery.objects.get(code=code).email
+
+        if new_password1 == new_password2:
+            try:
+                user = UserSignup.objects.get(email=email)
+                user.password = new_password1
+                user.confirm_password = new_password2
+                user.save()
+                return JsonResponse({'message': 'successful'},status=status.HTTP_200_OK) 
+            except:
+                return JsonResponse({'error': 'code doesnot exist'},status=status.HTTP_400_BAD_REQUEST) 
+        else:
+            return JsonResponse({'error': 'password not confirmed'},status=status.HTTP_400_BAD_REQUEST) 
+
+    return JsonResponse({'error': 'Invalid Request'},status=status.HTTP_400_BAD_REQUEST) 
 # Create Company API
 @api_view(['POST'])
 @csrf_exempt
@@ -789,3 +853,4 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
     def get_redirect_url(self):
         return "https://makina-d6193.firebaseapp.com/__/auth/handler"
+

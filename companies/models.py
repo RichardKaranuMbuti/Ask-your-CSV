@@ -7,6 +7,12 @@ import random
 import string
 # Create your models here.
 
+# Password recovery model
+class PasswordRecovery(models.Model):
+    email = models.EmailField(null=False)
+    code =  models.IntegerField(null=False)
+    created_on = models.DateTimeField(auto_now_add=True)
+
 # User Model
 class UserSignup(models.Model):
     user_id = models.CharField(max_length=13, unique=True, primary_key=True)
