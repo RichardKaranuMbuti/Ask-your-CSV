@@ -512,14 +512,14 @@ def chat_with_csv(request):
         #print("file_info:", file_info)
 
         formatted_file_info = "Use this additional file info: {}".format(file_info)
-        prompt2 = prompt 
-        
+        prompt2 = prompt
 
-        
 
-        prompt2 = prompt + f'csv files column names: {formatted_file_info}'
+
+
+        prompt2 = prompt + f'csv files column names: {formatted_file_info} if the question involves finacial data always user $ prefix before the answer'
         #print(f'joking :{formatted_file_info}')
-       
+
 
         # Load the OpenAI API key from the apikey model
         api_key_instance = ApiKey.objects.first()
@@ -531,12 +531,12 @@ def chat_with_csv(request):
 
         # Process CSV files
         openai_api_key = openai_api_key
-        
+
         if file_paths:
-            
+
             # Create the CSV agent
             #ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.9)
-            csv_agent = create_csv_agent(ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.8),
+            csv_agent = createe_csv_agent(ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.8),
                                          file_paths, verbose=True)
 
             # Get the response from the agent
@@ -564,7 +564,7 @@ def chat_with_csv(request):
                 message = response["choices"][0]["message"]
                 response = message["content"]
                 print("response:", response)
-                
+
 
                 # Save the response in the Message model
                 if response:
