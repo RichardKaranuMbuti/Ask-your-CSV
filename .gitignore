@@ -5,4 +5,7 @@ media/
 api_test.py
 db.sqlite3
 dbsettings.py
+cache/
+exports/
+.pandasailog
 

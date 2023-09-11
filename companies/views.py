@@ -464,7 +464,7 @@ def create_room_name(prompt):
         print('AI gen title: ', title)
     return title
 
-
+import json
 
 from .apikey import apikey
 os.environ['OPENAI_API_KEY'] = apikey
@@ -474,6 +474,9 @@ from langchain.chains import LLMChain, SimpleSequentialChain
 from langchain.chat_models import ChatOpenAI
 from django.utils import timezone
 import openai
+from .helperfunctions import read_csv_files_to_dataframes
+from pandasai import SmartDatalake
+from pandasai.llm.openai import OpenAI
 
 # chat with csv
 @csrf_exempt
@@ -508,16 +511,16 @@ def chat_with_csv(request):
         file_paths = [csv_file.file.path for csv_file in csv_files]
         print("file paths: ", file_paths)
 
-        file_info=inspect_user_csv(file_paths)
+        #file_info=inspect_user_csv(file_paths)
         #print("file_info:", file_info)
 
-        formatted_file_info = "Use this additional file info: {}".format(file_info)
+        #formatted_file_info = "Use this additional file info: {}".format(file_info)
         prompt2 = prompt
 
 
 
 
-        prompt2 = prompt + f'csv files column names: {formatted_file_info} if the question involves finacial data always user $ prefix before the answer'
+        #prompt2 = prompt + f'csv files column names: {formatted_file_info} if the question involves finacial data always user $ prefix before the answer'
         #print(f'joking :{formatted_file_info}')
 
 
@@ -531,17 +534,30 @@ def chat_with_csv(request):
 
         # Process CSV files
         openai_api_key = openai_api_key
+        
+        
 
         if file_paths:
+            dataframes = read_csv_files_to_dataframes(file_paths)
 
-            # Create the CSV agent
+            # Chat style 1: Create the CSV agent
             #ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.9)
-            csv_agent = createe_csv_agent(ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.8),
+            '''
+            csv_agent = create_csv_agent(ChatOpenAI(openai_api_key = openai_api_key,model='gpt-4',temperature=0.8),
                                          file_paths, verbose=True)
+            '''
+
+            # Chat style 2: Pandas ai
+            llm = OpenAI(openai_api_key=openai_api_key, model="gpt-4", temperature=0.9)
+            
+
+            dataframes = SmartDatalake(dataframes, config={"llm": llm})
 
             # Get the response from the agent
             #user_question = response + prompt
-            user_question = prompt2
+            #user_question = prompt2
+            user_question = prompt2 + '''if the question involves transaction/money data always use $ prefix before the answer.
+              Answer in the language the question was asked in'''
             #print("User question :", user_question)
 
 
@@ -551,29 +567,18 @@ def chat_with_csv(request):
             message.save()
 
             if user_question:
-                response1 = csv_agent.run(user_question)
-                openai.api_key = openai_api_key
-                prompt1=f"translate this text: {response1} to the language the prompt: {prompt}  was written in. If the text is already in the same language do nothing just output the text "
-
-                response = openai.ChatCompletion.create(
-                    model="gpt-4",
-                    messages= [{"role": "system", "content": prompt1 }, {"role": "user", "content": response1}],
-                    temperature=0,
-                    max_tokens=256
-                )
-                message = response["choices"][0]["message"]
-                response = message["content"]
-                print("response:", response)
+                response1 = dataframes.chat(user_question)
+                print("response1:", response1)
 
 
                 # Save the response in the Message model
-                if response:
+                if response1:
                     room = Room.objects.get(room_id=room_id)
                     message = Message(content=response1,
                                         agent_response=True, room=room, created_on=timezone.now())
                     message.save()
 
-                    return JsonResponse({'response': response})
+                    return JsonResponse({'response': response1})
 
         # Return a default response if no CSV files are found
         return JsonResponse({'response': 'No CSV files found.'})
