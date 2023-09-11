@@ -534,8 +534,8 @@ def chat_with_csv(request):
 
         # Process CSV files
         openai_api_key = openai_api_key
-        
-        
+
+
 
         if file_paths:
             dataframes = read_csv_files_to_dataframes(file_paths)
@@ -549,7 +549,7 @@ def chat_with_csv(request):
 
             # Chat style 2: Pandas ai
             llm = OpenAI(openai_api_key=openai_api_key, model="gpt-4", temperature=0.9)
-            
+
 
             dataframes = SmartDatalake(dataframes, config={"llm": llm})
 
