@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'company_csv_app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+
 # Development Database Configs
 
 
