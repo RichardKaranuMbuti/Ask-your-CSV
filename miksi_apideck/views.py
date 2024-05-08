@@ -10,8 +10,8 @@ from .models import ApiKey , UserSignup, Room, Message, UserInvoices
 from django.utils import timezone
 
 
-api_key = "sk_live_6a751a3c-8be9-4927-82fe-751dfcbccbcd-HvSEmAE78lgZkr6DWbr-e18147c2-54e1-4e91-8997-6ae4af2d36cf"
-app_id = "ePmmj5wvL1I6PRWDWbqhMcJyhNnTQTMHl5mDWbq"
+api_key = " "
+app_id = " "
 
 @csrf_exempt
 def signup_view(request):
